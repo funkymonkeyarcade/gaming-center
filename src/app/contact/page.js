@@ -2,7 +2,7 @@ import Image from "next/image"
 import Arrow from "../../assets/icons/arrow.svg"
 
 function Hero() {
-	return(
+	return (
 	  <section className='grid grid-cols-2 text-white px-16 pt-40 w-full'>
 		<div className='flex flex-col gap-4'>
 		  <h1 className='text-4xl font-black font-LogikBold'>GET IN TOUCH</h1>
@@ -12,11 +12,11 @@ function Hero() {
 }
 
 function Form() {
-	return(
+	return (
 		<section className="grid grid-cols-[2fr_3fr] px-16 py-40 w-full">
 			<div className="flex flex-col gap-2 text-white">
 				<div className="grid grid-cols-2">
-					<h1 className='text-4xl font-black font-LogikBold'>LET'S TALK</h1>
+					<h1 className='text-4xl font-black font-LogikBold'>LET&rsquo;S TALK</h1>
 					<Image className="h-full" src={Arrow} />
 				</div>
 				<p className="text-2xl">Share your excitement with us.</p>
@@ -37,10 +37,10 @@ function Form() {
 }
 
 function Map() {
-	return(
+	return (
 		<section className="flex flex-col gap-8 px-16 w-full">
 			<div className="flex flex-col gap-2 text-white">
-				<h1 className='text-4xl font-black font-LogikBold'>WE'RE HERE</h1>
+				<h1 className="text-4xl font-black font-LogikBold">WE&rsquo;RE HERE</h1>
 				<p className="text-2xl">Our door is always open for a good cup of coffee.</p>
 			</div>
 			<div className="w-full h-96 bg-black"></div>
