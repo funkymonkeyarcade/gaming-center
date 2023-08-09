@@ -1,3 +1,4 @@
+
 function NewsCard() {
 	return(
 		<div className='flex flex-col w-full shadow-lg'>
@@ -16,16 +17,16 @@ function NewsCard() {
 
 export default function News() {
 	return(
-		<div className="flex flex-col gap-8 items-center bg-primary pt-24 pb-24">
-			<div className="flex flex-col items-center justify-center w-11/12">
-				<h1 className="text-white font-LogikBold text-5xl pb-24">News</h1>
+		<div className="flex flex-col gap-8 items-center bg-primary pb-24">
+			<div className="flex flex-col pt-32 pb-24 items-center justify-center w-full bg-[linear-gradient(to_top,rgba(23,15,35,1),rgba(23,15,35,0)_90%),url('/cool-geometric-triangular-figure-neon-laser-light-great-backgrounds.jpg')]">
+				<h1 className="text-white font-LogikBold text-5xl">News</h1>
+			</div>
 
-				<div className="grid grid-cols-2 gap-8 w-full">
-					<NewsCard />
-					<NewsCard />
-					<NewsCard />
-					<NewsCard />
-				</div>
+			<div className="grid grid-cols-2 gap-8 w-11/12">
+				<NewsCard />
+				<NewsCard />
+				<NewsCard />
+				<NewsCard />
 			</div>
 		</div>
 	)

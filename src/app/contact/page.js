@@ -3,8 +3,8 @@ import Arrow from "../../assets/icons/arrow.svg"
 
 function Hero() {
 	return (
-	  <section className='grid grid-cols-2 text-white px-16 pt-40 w-full'>
-		<div className='flex flex-col gap-4'>
+	  <section className="grid grid-cols-2 text-white w-full bg-[linear-gradient(to_top,rgba(23,15,35,1),rgba(23,15,35,0)_90%),url('/2571411.jpg')] ">
+		<div className='flex flex-col px-16 pt-40 pb-16 gap-4 h-full bg-[linear-gradient(to_right,rgba(23,15,35,1),rgba(23,15,35,0)_100%)]'>
 		  <h1 className='text-4xl font-black font-LogikBold'>GET IN TOUCH</h1>
 		</div>
 	  </section>
@@ -21,6 +21,7 @@ function Form() {
 				</div>
 				<p className="text-2xl">Share your excitement with us.</p>
 			</div>
+
 			<div className="flex flex-col gap-2 px-12">
 				<div className="grid grid-cols-2 gap-4">
 					<input className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white  bg-transparent transition-all " type="text" name="name" placeholder="Full name"/>
@@ -43,6 +44,7 @@ function Map() {
 				<h1 className="text-4xl font-black font-LogikBold">WE&rsquo;RE HERE</h1>
 				<p className="text-2xl">Our door is always open for a good cup of coffee.</p>
 			</div>
+
 			<div className="w-full h-96 bg-black"></div>
 			<div className="grid grid-cols-2 text-white">
 				<div className="flex flex-col gap-2">

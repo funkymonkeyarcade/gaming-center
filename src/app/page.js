@@ -1,15 +1,20 @@
 import { NewsList } from '@/components/News.jsx'
 import { Calendar } from '../components/Calendar.jsx'
-import News from './news/page.js'
 import Numbers from '@/components/Numbers.jsx'
 
 function Hero() {
   return(
-    <section className='grid grid-cols-2 text-white px-16 pt-56 pb-32 w-full'>
-      <div className='flex flex-col gap-4'>
+    <section className='relative grid grid-cols-2 text-white px-16 pt-56 pb-32 w-full'>
+      <div className='flex flex-col gap-4 z-10'>
         <h1 className='text-4xl font-black font-LogikBold'>INTERNATIONAL <br/><span className='text-accent'>E</span>SPORTS FEDERATION</h1>
         <button className='p-4 w-max font-bold bg-accent text-white hover:bg-white hover:text-accent transition-all rounded-md'>15TH WORLD ESPORTS CHAMPIONSHIP</button>
       </div>
+      <div className='absolute w-full h-full overflow-hidden'>
+        <video autoPlay loop>
+          <source src='/pexels_videos_1957727 (1080p).mp4' />
+        </video>
+      </div>
+
     </section>
   )
 }
@@ -30,7 +35,7 @@ function Partners() {
 
 export default function Home() {
   return (
-    <div className='flex flex-col items-center bg-primary'>
+    <div className='flex flex-col items-center bg-primary overflow-hidden'>
        <Hero />
        <NewsList />
        <Calendar />
