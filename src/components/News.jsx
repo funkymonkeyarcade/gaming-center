@@ -1,16 +1,23 @@
 'use client'
+import { app } from "@/utils/firebase";
+import { collection, query, getDocs, getFirestore } from "firebase/firestore";
+
 import Image from "next/image";
 import Slider from "react-slick";
 
 import NextIcon from "../assets/icons/next.svg"
 import PreviousIcon from "../assets/icons/prev.svg"
+import { useEffect, useState } from "react";
+import Link from "next/link";
 
-function NewsCard() {
+function NewsCard({image, title}) {
 	return (
-	  <div className='flex flex-col gap-2 w-72'>
-		<img className='bg-black h-52 rounded-lg w-full' src="" alt="" />
-		<h2 className='text-white font-LogikBold'>The nations are calling out the greats</h2>
-	  </div>
+		<Link href={`/news/${title}`}>
+		  <div className='flex flex-col gap-2 w-72'>
+			<div className={`bg-black h-52 rounded-lg w-full bg-center bg-[size:120%] hover:bg-[size:140%] transition-all`}  alt="" style={{backgroundImage: `url(${image})`}}/>
+			<h2 className='text-white font-LogikBold'>{title}</h2>
+		  </div>
+		</Link>
 	)
   }
 
@@ -39,27 +46,40 @@ function NewsCard() {
   }
 
 export function NewsList() {
+	const [news, setNews] = useState([])
 	const settings = {
 		dots: false,
 		infinite: true,
-		// centerMode: true,
 		speed: 500,
 		slidesToShow: 4,
 		slidesToScroll: 1,
 		nextArrow: <Next />,
       	prevArrow: <Prev />
-	};
+	}
+
+	async function GetNews() {
+
+		const db = getFirestore(app);
+
+		const q = query(collection(db, "News"));
+
+		const querySnapshot = await getDocs(q);
+		const newsData = querySnapshot.docs.map((doc) => doc.data());
+     	setNews(newsData);
+
+	}
+
+	useEffect(() => {
+		GetNews()
+	}, [])
 
 	return (
 	  <section className='flex flex-col gap-24 px-16 pt-8 w-full'>
 		<h1 className='text-white font-LogikBold text-5xl w-full pb-24 border-accent border-b-2'>News</h1>
 		<Slider className="w-full" {...settings}>
-		  <div><NewsCard/></div>
-		  <div><NewsCard/></div>
-		  <div><NewsCard/></div>
-		  <div><NewsCard/></div>
-		  <div><NewsCard/></div>
-		  <div><NewsCard/></div>
+			{news.map((newsItem, idx) => (
+				<div key={idx}><NewsCard title={newsItem.title} image={newsItem.image} /></div>
+			))}
 		</Slider>
 	  </section>
 	)
