@@ -3,7 +3,7 @@ import Arrow from "../../assets/icons/arrow.svg"
 
 function Hero() {
 	return (
-	  <section className="grid grid-cols-2 text-white w-full bg-[linear-gradient(to_top,rgba(23,15,35,1),rgba(23,15,35,0)_90%),url('/2571411.jpg')] ">
+	  <section className="grid grid-cols-2 text-white w-full bg-[size:100%] bg-center bg-[linear-gradient(to_top,rgba(23,15,35,1),rgba(23,15,35,0)_90%),url('https://firebasestorage.googleapis.com/v0/b/gaming-906ed.appspot.com/o/pexels-element-digital-1293261.jpg?alt=media&token=ad8fefa9-eb5c-48e8-b965-2bb9e431a838')] ">
 		<div className='flex flex-col px-16 pt-40 pb-16 gap-4 h-full bg-[linear-gradient(to_right,rgba(23,15,35,1),rgba(23,15,35,0)_100%)]'>
 		  <h1 className='text-4xl font-black font-LogikBold'>GET IN TOUCH</h1>
 		</div>

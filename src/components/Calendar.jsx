@@ -12,8 +12,8 @@ function formatDate(dateString) {
 
 function CalendarCard({title, image, from, to}) {
 	return(
-	  <div className='flex flex-col gap-4 items-center justify-center w-64 px-4 h-72 bg-black bg-cover bg-opacity-20 rounded-lg' style={{backgroundImage: `linear-gradient(rgba(218, 28, 92, 0.8), rgba(218, 28, 92, 0.8)), url(${image})`}}>
-		<p className='font-LogikWide text-gray-800 text-sm'>{`${formatDate(from)} - ${formatDate(to)}`}</p>
+	  <div className='flex flex-col gap-4 items-center justify-center w-64 px-2 h-72 bg-black bg-cover bg-opacity-20 rounded-lg' style={{backgroundImage: `linear-gradient(rgba(218, 28, 92, 0.9), rgba(218, 28, 92, 0.9)), url(${image})`}}>
+		<p className='font-LogikBold text-gray-800 text-lg'>{`${formatDate(from)} - ${formatDate(to)}`}</p>
 		<h2 className='text-white font-LogikBold text-2xl text-center'>{title}</h2>
 	  </div>
 	)
