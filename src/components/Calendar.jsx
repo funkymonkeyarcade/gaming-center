@@ -41,11 +41,11 @@ function CalendarCard({title, image, from, to}) {
 	}, [])
 
 	return (
-	  <section className='flex flex-col gap-16 px-16 pt-32 pb-8 w-full'>
+	  <section className='flex flex-col gap-16 px-8 sm:px-16 justify-center items-center pt-32 pb-8 w-full'>
 		<h1 className='text-white font-LogikBold text-5xl w-full pb-24 border-accent border-b-2'>2023 EVENTS CALENDAR</h1>
-		<div className='flex gap-8 justify-center overflow-hidden w-full pb-16'>
+		<div className='flex flex-col sm:flex-row gap-8 justify-center overflow-hidden w-full pb-16'>
 			{events && events.map((eventItem, idx) => (
-				<div key={idx}><CalendarCard title={eventItem.title} image={eventItem.image} from={eventItem.from} to={eventItem.to}/></div>
+				<div key={idx} className="flex justify-center"><CalendarCard title={eventItem.title} image={eventItem.image} from={eventItem.from} to={eventItem.to}/></div>
 			))}
 		</div>
 	  </section>

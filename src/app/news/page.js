@@ -47,7 +47,7 @@ export default function News() {
 				<h1 className="text-white font-LogikBold text-5xl">News</h1>
 			</div>
 
-			<div className="grid grid-cols-2 gap-8 w-11/12">
+			<div className="grid sm:grid-cols-2 gap-8 w-11/12">
 				{news && news.map((newsItem, idx) => (
 					<div key={idx}><NewsCard title={newsItem.title} image={newsItem.image} timestamp={newsItem.timestamp} /></div>
 				))}

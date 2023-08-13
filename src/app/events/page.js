@@ -15,13 +15,13 @@ function getShortMonth(dateString) {
 
 function EventCard({image, title, type, from, to, location, games, participants}) {
 	return (
-		<div className="grid grid-cols-[1fr_6fr] items-center h-72 w-full">
-			<div className="flex flex-col items-center gap-4">
+		<div className="flex flex-col gap-8 sm:grid sm:grid-cols-[1fr_6fr] items-center sm:h-72 w-full">
+			<div className="flex sm:flex-col items-center gap-4">
 				<div className="flex flex-col items-center">
 					<h2 className="text-xl text-accent font-LogikWide">{getShortMonth(from).shortMonth}</h2>
 					<h1 className="text-5xl text-white font-LogikBold">{getShortMonth(from).day}</h1>
 				</div>
-				<div className="h-2 bg-white w-5/12 rounded-lg"></div>
+				<div className="h-12 sm:h-2 bg-white w-full sm:w-5/12 rounded-lg"></div>
 				<div className="flex flex-col items-center">
 					<h2 className="text-xl text-accent font-LogikWide">{getShortMonth(to).shortMonth}</h2>
 					<h1 className="text-5xl text-white font-LogikBold">{getShortMonth(to).day}</h1>
@@ -29,24 +29,24 @@ function EventCard({image, title, type, from, to, location, games, participants}
 			</div>
 
 			<div className="relative h-full w-11/12">
-				<div className="relative left-6 z-10 grid grid-cols-[2fr_3fr] gap-6 h-full">
-					<img className="h-full bg-black w-full shadow-lg" src={`${image}`} />
-					<div className="text-black py-8 flex flex-col gap-4 justify-center">
+				<div className="relative flex flex-col sm:left-6 z-10 sm:grid sm:grid-cols-[2fr_3fr] sm:gap-6 h-full">
+					<img className="h-full bg-black w-11/12 m-auto sm:w-full shadow-lg" src={`${image}`} />
+					<div className="text-black pb-16 py-6 px-8 sm:px-0 sm:pb-0 flex flex-col gap-4 justify-center">
 						<h1 className="text-2xl font-LogikBold">{title}</h1>
 						<div className="flex flex-col gap-2">
-							<div className="flex gap-4">
+							<div className="sm:flex gap-4">
 								<h2 className="text-base font-LogikBold">TYPE</h2>
 								<p>{type}</p>
 							</div>
-							<div className="flex gap-4">
+							<div className="sm:flex gap-4">
 								<h2 className="text-base font-LogikBold">LOCATION</h2>
 								<p>{location}</p>
 							</div>
-							<div className="flex flex-col">
+							<div className="sm:flex flex-col">
 								<h2 className="text-base font-LogikBold">GAME TITLES</h2>
 								<p className="w-10/12">{games}</p>
 							</div>
-							<div className="flex gap-4">
+							<div className="sm:flex gap-4">
 								<h2 className="text-base font-LogikBold">PARTICIPATING COUNTRIES</h2>
 								<p>{participants}</p>
 							</div>

@@ -9,12 +9,12 @@ import { app } from "@/utils/firebase";
 
 function FactCard({number, image, description}) {
 	return(
-		<div className='grid grid-cols-[1fr_2fr] gap-24 w-full pb-16'>
-		  <div className='flex flex-col gap-2 items-start justify-center px-12'>
+		<div className='flex flex-col-reverse sm:grid sm:grid-cols-[1fr_2fr] sm:gap-24 w-full pb-16'>
+		  <div className='flex flex-col gap-2 items-start justify-center sm:px-12'>
 			<h1 className='text-white text-6xl font-LogikBold'>{number}</h1>
 			<p className='text-white text-2xl font-LogikWide text-left'>{description}</p>
 		  </div>
-		  <div className='flex justify-end h-96 relative w-11/12'>
+		  <div className='flex justify-end h-96 relative sm:w-11/12'>
 			<img className='h-80 w-96 bg-black' src={image} alt={description} />
 		  </div>
 		</div>
@@ -42,7 +42,7 @@ export default function Numbers() {
 	}, [])
 
 	return (
-	  <section className='flex flex-col items-center gap-16 px-16 pt-16 pb-8 w-full '>
+	  <section className='flex flex-col items-center gap-16 px-8 sm:px-16 pt-16 pb-8 w-full '>
 		<h1 className='text-white font-LogikBold text-5xl w-full pb-4'>ESPORTS BY THE NUMBERS</h1>
 		<Carousel showStatus={false} infiniteLoop={true} showArrows={false} className="w-full">
 			{facts && facts.map((factsItem, idx) => (
