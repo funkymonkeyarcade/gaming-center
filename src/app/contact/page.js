@@ -1,6 +1,8 @@
+"use client"
+
 import Image from "next/image"
 
-import GoogleMapReact from 'google-map-react';
+// import GoogleMapReact from 'google-map-react';
 
 import Arrow from "../../assets/icons/arrow.svg"
 
