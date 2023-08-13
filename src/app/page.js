@@ -10,6 +10,7 @@ function Hero() {
         <button className='p-4 w-max font-bold bg-accent text-white hover:bg-white hover:text-accent transition-all rounded-md'>15TH WORLD ESPORTS CHAMPIONSHIP</button>
       </div>
       <div className='absolute hidden sm:block w-full sm:h-full overflow-hidden'>
+        <div className='absolute top-0 h-[200%] w-full bg-gradient-to-t from-primary via-primary to-transparent '></div>
         <video autoPlay loop>
           <source src='/pexels_videos_1957727 (1080p).mp4' />
         </video>
@@ -40,7 +41,7 @@ export default function Home() {
        <NewsList />
        <Calendar />
        <Numbers />
-       <Partners />
+       {/* <Partners /> */}
     </div>
   )
 }
