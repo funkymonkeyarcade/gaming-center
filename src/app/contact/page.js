@@ -2,9 +2,15 @@
 
 import Image from "next/image"
 
-// import GoogleMapReact from 'google-map-react';
+import GoogleMapReact from 'google-map-react';
 
 import Arrow from "../../assets/icons/arrow.svg"
+
+function MapContainer() {
+	return(
+		<div></div>
+	)
+}
 
 function Hero() {
 	return (
@@ -59,17 +65,17 @@ function Map() {
 			</div>
 
 			<div className="w-full h-96 bg-black">
-				{/* <GoogleMapReact
+				<GoogleMapReact
 					bootstrapURLKeys={{ key: "" }}
 					defaultCenter={defaultProps.center}
 					defaultZoom={defaultProps.zoom}
 				>
-				<AnyReactComponent
+				<MapContainer
 					lat={59.955413}
 					lng={30.337844}
 					text="My Marker"
 				/>
-				</GoogleMapReact> */}
+				</GoogleMapReact>
 			</div>
 
 			<div className=" flex flex-col gap-8 sm:gap-0 items-center sm:grid sm:grid-cols-2 text-white">
