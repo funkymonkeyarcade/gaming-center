@@ -4,10 +4,8 @@ import { app } from "@/utils/firebase"
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getFirestore,setDoc, doc, updateDoc, query, collection, querySnapshot, getDocs } from "firebase/firestore";
 import { useState, useEffect } from "react"
-import Image from "next/image";
-import { useRouter } from "next/navigation";
 
-async function uploadItem({image, title, amount}) {
+async function uploadItem({image, title, amount, price}) {
 	const storage = getStorage()
 	const storageRef = ref(storage, `${title}.png`)
 
@@ -18,11 +16,12 @@ async function uploadItem({image, title, amount}) {
 	await setDoc(doc(db, "Items", title), {
 		image: imageLink,
 		title,
-		amount
+		amount,
+		price
 	})
 }
 
-function ItemCard({title, image, amount}) {
+function ItemCard({title, image, amount, price}) {
 	const [currentAmount, setCurrentAmount] = useState(amount)
 
 	useEffect(() => {},[amount])
@@ -54,7 +53,8 @@ function ItemCard({title, image, amount}) {
 			<img src={image} width={80} height={80} alt={title}/>
 			<div className="flex flex-col">
 				<h2 className="text-2xl font-LogikBold">{title}</h2>
-				<p className="text-xl font-LogikWide">{currentAmount}</p>
+				<p className="text-xl font-LogikWide">Price: {price}Rwf</p>
+				<p className="text-xl font-LogikWide">Stock: {currentAmount}</p>
 			</div>
 			<div className="flex gap-4">
 				<button onClick={plusItem} className='py-2 px-6 font-LogikBold justify-self-end w-max bg-accent text-white hover:bg-white hover:text-accent transition-all rounded-md'>ADD</button>
@@ -68,6 +68,7 @@ function AddItem({toggleAddItem}) {
 	const [image, setImage] = useState()
 	const [title, setTitle] = useState()
 	const [amount, setAmount] = useState(0)
+	const [price, setPrice] = useState(0)
 
 	const handleImage = (e) => {
 		setImage(e.target.files[0])
@@ -81,11 +82,16 @@ function AddItem({toggleAddItem}) {
 		setAmount(e.target.value)
 	}
 
+	const handlePrice = (e) => {
+		setPrice(e.target.value)
+	}
+
 	const onPublish = async () => {
 		const item = {
 			image,
 			title,
-			amount
+			amount,
+			price
 		}
 
 		uploadItem(item)
@@ -97,6 +103,7 @@ function AddItem({toggleAddItem}) {
 				<h1 className="font-LogikBold text-2xl">Add Item</h1>
 				<input onChange={handleImage} type="file" placeholder="Enter image" multiple accept="image/*,audio/*,video/*" className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white  bg-transparent transition-all"></input>
 				<input onChange={handleTitle} type="text" name="title" placeholder="Enter item title" className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white  bg-transparent transition-all"/>
+				<input onChange={handlePrice} type="text" name="price" placeholder="Enter item price" className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white  bg-transparent transition-all"/>
 				<div className="flex flex-col">
 					<label htmlFor="amount" className="text-white text-lg font-LogikWide">amount: {amount}</label>
 					<input onChange={handleAmount} type="range" value={amount} name="amount" placeholder="Enter amount" className="h-4 px-2 appearance-none bg-white rounded-full [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:bg-accent [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:rounded-full"/>
@@ -143,7 +150,7 @@ export default function UpdateRentals() {
 
 			<div className="flex flex-col gap-4">
 				{items && items.map((itemsItem, idx) => (
-					<div key={idx}><ItemCard title={itemsItem.title} image={itemsItem.image} amount={itemsItem.amount}/></div>
+					<div key={idx}><ItemCard title={itemsItem.title} image={itemsItem.image} amount={itemsItem.amount} price={itemsItem.price}/></div>
 				))}
 			</div>
 		</div>
