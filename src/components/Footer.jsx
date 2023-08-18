@@ -13,11 +13,11 @@ export function Footer() {
 		<div className='flex flex-col gap-8 sm:gap-0 sm:flex-row justify-between items-center w-full py-4 border-accent border-b-2'>
 		  <Image className="w-60" src={Logo} width={"100%"} />
 		  <ul className="flex gap-4">
-			{/* <a href=""><li className="w-10 h-10 p-2 rounded-full border-[0.1rem] border-white"><Image src={facebook} width={'50%'}></Image></li></a>
-			<a href=""><li className="w-10 h-10 p-2 rounded-full border-[0.1rem] border-white"><Image src={twitter} width={'50%'}></Image></li></a>		 */}
-			<a href="https://www.youtube.com/@FunkymonkeyArcade"><li className="w-10 h-10 p-2 rounded-full border-[0.1rem] border-white"><Image src={youtube} width={'50%'}></Image></li></a>
-			{/* <a href=""><li className="w-10 h-10 p-2 rounded-full border-[0.1rem] border-white"><Image src={linkedin} width={'50%'}></Image></li></a>			 */}
-			<a href="https://www.instagram.com/s/aGlnaGxpZ2h0OjE4MDE0Mzk0OTY0NjQxMzIy?igshid=MzRlODBiNWFlZA=="><li className="w-10 h-10 p-2 rounded-full border-[0.1rem] border-white"><Image src={instagram} width={'50%'}></Image></li></a>
+			{/* <a href="" target="_blank"><li className="w-10 h-10 p-2 rounded-full border-[0.1rem] border-white"><Image src={facebook} width={'50%'}></Image></li></a>
+			<a href="" target="_blank"><li className="w-10 h-10 p-2 rounded-full border-[0.1rem] border-white"><Image src={twitter} width={'50%'}></Image></li></a>		 */}
+			<a href="https://www.youtube.com/@FunkymonkeyArcade" target="_blank"><li className="w-10 h-10 p-2 rounded-full border-[0.1rem] border-white"><Image src={youtube} width={'50%'}></Image></li></a>
+			{/* <a href="" target="_blank"><li className="w-10 h-10 p-2 rounded-full border-[0.1rem] border-white"><Image src={linkedin} width={'50%'}></Image></li></a>			 */}
+			<a href="https://www.instagram.com/s/aGlnaGxpZ2h0OjE4MDE0Mzk0OTY0NjQxMzIy?igshid=MzRlODBiNWFlZA==" target="_blank"><li className="w-10 h-10 p-2 rounded-full border-[0.1rem] border-white"><Image src={instagram} width={'50%'}></Image></li></a>
 		  </ul>
 		</div>
 		<div>
