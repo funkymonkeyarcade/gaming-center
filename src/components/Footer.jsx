@@ -27,7 +27,7 @@ export function Footer() {
 		  </ul>
 		</div>
 		<div className='flex justify-center w-full text-center sm:text-left'>
-		  <p className='text-sm font-LogikWide'>© All rights reserved – International Esports Federation</p>
+		  <p className='text-sm font-LogikWide'>© All rights reserved – Funky Monkey Arcade</p>
 		</div>
 	  </footer>
 	)
