@@ -130,7 +130,7 @@ function ItemRentForm({image, title, price, itemId, setIsRentForm}) {
 
 				<div className="flex flex-col gap-2 w-full">
 					<label htmlFor="amount" className="text-white text-lg font-LogikWide">Pickup date</label>
-					<input onChange={handlePickupDate} type="date" name="pickup" placeholder="Enter the pickup date" className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white bg-transparent transition-all"/>
+					<input onChange={handlePickupDate} type="date" name="pickup" placeholder="Enter the pickup date" className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white bg-transparent transition-all" style={{colorScheme: 'dark'}}/>
 				</div>
 
 				{<p className="text-red-800 text-xl font-LogikBold">{error}</p>}
