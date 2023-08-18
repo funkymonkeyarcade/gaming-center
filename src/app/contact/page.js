@@ -120,7 +120,7 @@ function Map() {
 						<p>KN 3 Rd, Kigali</p>
 					</div>
 				</div>
-				<div className="grid grid-cols-2 sm:flex justify-center sm:justify-between w-full">
+				<div className="grid grid-cols-1 sm:flex justify-center sm:justify-between w-full">
 					<div className="flex flex-col">
 						<h1 className='text-xl font-black font-LogikBold'>Email</h1>
 						<p>arcadefunkymonkey@gmail.com</p>
