@@ -115,7 +115,7 @@ function ItemRentForm({image, title, price, itemId, setIsRentForm}) {
 
 	return(
 		<div className="fixed z-50 top-0 left-0 h-screen w-screen grid place-items-center bg-black bg-opacity-90">
-			<div className="flex flex-col items-center gap-6 py-8 px-8 w-5/12">
+			<div className="flex flex-col items-center gap-6 py-8 px-8 w-full sm:w-5/12">
 				{IdView && <IdCard id={rentalId} toggleIdView={toggleIdView}/>}
 				<h1 className="font-LogikBold text-2xl">Rental Form</h1>
 
