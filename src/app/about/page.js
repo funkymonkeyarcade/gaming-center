@@ -6,7 +6,7 @@ function AboutText() {
 		<section className="flex flex-col gap-4 py-24 bg-white text-primary w-full px-8 sm:px-16">
 			<h1 className='text-6xl font-black font-LogikBold'>WHAT IS FUNKY MONKEY ARCADE?</h1>
 			<h2 className="text-lg font-LogikWide"><b>Unleashing the Thrill of Competitive Gaming in Rwanda</b></h2>
-			<p className="text-2xl">Your premier destination for esports excitement in Rwanda. Immerse yourself in a world where gaming transcends boundaries. From casual players to aspiring pros, our cutting-edge facility fosters skill growth and community building. Join us and be part of redefining Rwanda's esports scene.</p>
+			<p className="text-2xl">Your premier destination for esports excitement in Rwanda. Immerse yourself in a world where gaming transcends boundaries. From casual players to aspiring pros, our cutting-edge facility fosters skill growth and community building. Join us and be part of redefining Rwanda&rsquo;s esports scene.</p>
 		</section>
 	)
 }
@@ -17,7 +17,7 @@ function TournamentText() {
 			<div className="flex flex-col gap-4">
 				<h1 className='text-4xl sm:text-6xl font-black font-LogikBold'>OFFICIAL TOURNAMENT ARENA</h1>
 				<h2 className="text-lg font-LogikWide"><b>Elevate Your Game.</b></h2>
-				<p className="text-2xl">Funky Monkey Arcade's Tournament Arena isn't just a platform – it's a launching pad for esports enthusiasts to ascend to new heights. Sharpen your skills, forge connections, and etch your name into the annals of esports history.</p>
+				<p className="text-2xl">Funky Monkey Arcade&rsquo;s Tournament Arena isn&rsquo;t just a platform – it&rsquo;s a launching pad for esports enthusiasts to ascend to new heights. Sharpen your skills, forge connections, and etch your name into the annals of esports history.</p>
 			</div>
 			<img className="w-full h-full" src="https://firebasestorage.googleapis.com/v0/b/gaming-906ed.appspot.com/o/michal-ilenda-UzwsrV3bFdU-unsplash.png?alt=media&token=a2f93deb-6f0a-46a7-bdc4-0f6e10327d55"/>
 		</section>
