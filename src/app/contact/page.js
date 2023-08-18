@@ -1,8 +1,11 @@
 "use client"
 
+import {useState, useRef} from "react"
 import Image from "next/image"
 
 import GoogleMapReact from 'google-map-react';
+
+import emailjs from "@emailjs/browser"
 
 import Arrow from "../../assets/icons/arrow.svg"
 
@@ -23,6 +26,39 @@ function Hero() {
 }
 
 function Form() {
+	const form = useRef()
+
+	const [name, setName] = useState()
+	const [email, setEmail] = useState()
+	const [phone, setPhone] = useState()
+	const [message, setMessage] = useState()
+
+	function handleName(e) {
+		setName(e.target.value)
+	}
+
+	function handleEmail(e) {
+		setEmail(e.target.value)
+	}
+
+	function handlePhone(e) {
+		setPhone(e.target.value)
+	}
+
+	function handleMessage(e) {
+		setMessage(e.target.value)
+	}
+
+	function sendMail(e) {
+		e.preventDefault()
+
+		emailjs.sendForm(process.env.NEXT_PUBLIC_SERVICE_ID, process.env.NEXT_PUBLIC_TEMPLATE_ID, form.current, process.env.NEXT_PUBLIC_PUBLIC_KEY).then(result => {
+			console.log(result)
+		}).catch(error => {
+			console.log(error)
+		})
+	}
+
 	return (
 		<section className="flex flex-col sm:grid sm:grid-cols-[2fr_3fr] px-8 sm:px-16 py-40 w-full">
 			<div className="flex flex-col gap-2 text-white">
@@ -33,16 +69,15 @@ function Form() {
 				<p className="text-2xl">Share your excitement with us.</p>
 			</div>
 
-			<div className="flex flex-col gap-2 px-8 sm:px-12">
+			<form className="flex flex-col gap-2 px-8 sm:px-12" ref={form} onSubmit={sendMail}>
 				<div className="flex flex-col w-full sm:grid sm:grid-cols-2 gap-4">
-					<input className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white  bg-transparent transition-all " type="text" name="name" placeholder="Full name"/>
-					<input className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white bg-transparent transition-all" type="text" name="email" placeholder="E-mail"/>
-					<input className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white bg-transparent transition-all" type="phone" name="phone" placeholder="Phone number"/>
-					<input className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white bg-transparent transition-all" type="text" name="message" placeholder="Message"/>
+					<input onChange={handleName} className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white  bg-transparent transition-all " type="text" name="user_name" placeholder="Full name"/>
+					<input onChange={handleEmail} className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white bg-transparent transition-all" type="email" name="user_email" placeholder="E-mail"/>
+					<input onChange={handlePhone} className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white bg-transparent transition-all" type="phone" name="user_phone" placeholder="Phone number"/>
+					<input onChange={handleMessage} className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white bg-transparent transition-all" type="text" name="message" placeholder="Message"/>
 				</div>
-				<p className="text-accent">This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply.</p>
-				<button className='py-2 px-6 font-LogikBold col-span-2 justify-self-end w-max font-bold bg-accent text-white hover:bg-white hover:text-accent transition-all rounded-md'>SEND</button>
-			</div>
+				<input type="submit" value="Send" className='py-2 px-6 font-LogikBold col-span-2 justify-self-end w-max font-bold bg-accent text-white hover:bg-white hover:text-accent transition-all rounded-md' />
+			</form>
 
 		</section>
 	)
@@ -80,24 +115,23 @@ function Map() {
 
 			<div className=" flex flex-col gap-8 sm:gap-0 items-center sm:grid sm:grid-cols-2 text-white">
 				<div className="flex flex-col gap-2">
-					<h1 className='text-xl font-black font-LogikBold'>Busan, Korea</h1>
+					<h1 className='text-xl font-black font-LogikBold'>Kigali, Rwanda</h1>
 					<div className="flex flex-col">
-						<p>615, 6F, Suyeonggangbyeon-daero</p>
-						<p>615, 6F, Suyeonggangbyeon-daero</p>
+						<p>KN 3 Rd, Kigali</p>
 					</div>
 				</div>
 				<div className="grid grid-cols-2 sm:flex justify-center sm:justify-between w-full">
 					<div className="flex flex-col">
 						<h1 className='text-xl font-black font-LogikBold'>Email</h1>
-						<p>contact@iesf.org</p>
+						<p>arcadefunkymonkey@gmail.com</p>
 					</div>
 					<div className="flex flex-col">
 						<h1 className='text-xl font-black font-LogikBold'>Phone</h1>
-						<p>+82 5 17466634</p>
+						<p>+250 784 674 639</p>
 					</div>
 					<div className="flex flex-col">
 						<h1 className='text-xl font-black font-LogikBold'>Hours</h1>
-						<p>00:00 - 00:00</p>
+						<p>10:00 - 22:00</p>
 					</div>
 				</div>
 			</div>

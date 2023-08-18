@@ -1,13 +1,14 @@
 import { NewsList } from '@/components/News.jsx'
 import { Calendar } from '../components/Calendar.jsx'
 import Numbers from '@/components/Numbers.jsx'
+import Link from 'next/link.js'
 
 function Hero() {
   return(
     <section className='relative sm:h-full grid grid-cols-2 text-white px-4 pt-56 pb-56 sm:px-16 sm:pt-56 sm:pb-32 w-full'>
       <div className='flex flex-col h-full justify-center gap-4 z-10'>
-        <h1 className='text-4xl font-black font-LogikBold'>INTERNATIONAL <br/><span className='text-accent'>E</span>SPORTS FEDERATION</h1>
-        <button className='p-4 w-max font-bold bg-accent text-white hover:bg-white hover:text-accent transition-all rounded-md'>15TH WORLD ESPORTS CHAMPIONSHIP</button>
+        <h1 className='text-4xl font-black font-LogikBold'>FIRST E-SPORT CENTER <br/>IN <span className='text-accent'>R</span>WANDA</h1>
+        <Link href='/events'><button className='p-4 w-max font-bold bg-accent text-white hover:bg-white hover:text-accent transition-all rounded-md'>UPCOMING EVENTS</button></Link>
       </div>
       <div className='absolute hidden sm:block w-full sm:h-full overflow-hidden'>
         <div className='absolute top-0 h-[200%] w-full bg-gradient-to-t from-primary via-primary to-transparent '></div>

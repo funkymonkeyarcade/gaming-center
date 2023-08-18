@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emailjs/browser": "^3.11.0",
     "autoprefixer": "10.4.14",
     "eslint": "8.46.0",
     "eslint-config-next": "13.4.13",
@@ -21,7 +22,8 @@
     "react-responsive-carousel": "^3.2.23",
     "react-slick": "^0.29.0",
     "slick-carousel": "^1.8.1",
-    "tailwindcss": "3.3.3"
+    "tailwindcss": "3.3.3",
+    "uniqid": "^5.4.0"
   },
   "devDependencies": {
     "encoding": "^0.1.13"

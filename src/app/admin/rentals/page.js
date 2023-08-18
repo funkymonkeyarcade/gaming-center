@@ -2,50 +2,73 @@
 
 import { app } from "@/utils/firebase"
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { getFirestore,setDoc, doc, updateDoc, query, collection, querySnapshot, getDocs } from "firebase/firestore";
+import { getFirestore,setDoc, doc, updateDoc, query, collection, querySnapshot, getDocs, deleteDoc } from "firebase/firestore";
 import { useState, useEffect } from "react"
+import { getDate } from "@/app/news/[article]/page";
+import uniqid from 'uniqid';
 
-async function uploadItem({image, title, amount, price}) {
+async function uploadItem({image, title, price}) {
 	const storage = getStorage()
 	const storageRef = ref(storage, `${title}.png`)
 
 	const snapshot = await uploadBytes(storageRef, image);
 	const imageLink = await getDownloadURL(snapshot.ref);
 
+	const itemId = uniqid()
+
 	const db = getFirestore(app);
-	await setDoc(doc(db, "Items", title), {
+	await setDoc(doc(db, "Items", itemId), {
 		image: imageLink,
 		title,
-		amount,
-		price
+		price,
+		itemId
 	})
 }
 
-function ItemCard({title, image, amount, price}) {
-	const [currentAmount, setCurrentAmount] = useState(amount)
+function RentalsCard({title, price, name, rentalDate, pickupDate, verified, rentalId, phone}) {
+	const [currentVerified, setCurrentVerified] = useState(verified)
 
-	useEffect(() => {},[amount])
+	console.log(verified)
 
-	async function plusItem() {
+	async function verifyRental() {
 		const db = getFirestore(app);
-		const itemRef = doc(db, "Items", title)
-
-		const updatedAmount = parseInt(currentAmount) + 1
+		const itemRef = doc(db, "Rentals", rentalId)
 
 		await updateDoc(itemRef, {
-			amount: updatedAmount
-		}).then(() => setCurrentAmount(updatedAmount))
+			verified: true
+		}).then(() => setCurrentVerified(true))
 	}
 
-	async function minusItem() {
+	async function closeRental() {
 		const db = getFirestore(app);
-		const itemRef = doc(db, "Items", title)
+		await deleteDoc(doc(db, "Rentals", rentalId));
+	}
 
-		const updatedAmount = parseInt(currentAmount) - 1
+	return(
+		<div className="w-full p-4 flex justify-between items-center bg-black bg-opacity-70 rounded-lg shadow-lg">
+			<div className="flex flex-col">
+				<h2 className="text-2xl font-LogikBold">ID: {rentalId}</h2>
+				<p className="text-xl font-LogikWide">Name: {name}</p>
+				<p className="text-xl font-LogikWide">Phone Number: {phone}</p>
+				<p className="text-xl font-LogikWide">Item: {title}</p>
+				<p className="text-xl font-LogikWide">Price: {price}Rwf</p>
+				<p className="text-xl font-LogikWide">Rental Date: {getDate(rentalDate)}</p>
+				<p className="text-xl font-LogikWide">Pickup date: {pickupDate}</p>
+				<p className="text-xl font-LogikWide">verified: {JSON.stringify(currentVerified)}</p>
+			</div>
+			<div className="flex gap-4">
+				<button onClick={verifyRental} className='py-2 px-6 font-LogikBold justify-self-end w-max bg-accent text-white hover:bg-white hover:text-accent transition-all rounded-md'>VERIFY</button>
+				<button onClick={closeRental} className='py-2 px-6 font-LogikBold justify-self-end w-max hover:bg-gray-600 bg-gray-800 text-white transition-all rounded-md'>CLOSE</button>
+			</div>
+		</div>
+	)
+}
 
-		await updateDoc(itemRef, {
-			amount: updatedAmount
-		}).then(() => setCurrentAmount(updatedAmount))
+function ItemCard({title, image, price, itemId}) {
+
+	async function removeItem() {
+		const db = getFirestore(app);
+		await deleteDoc(doc(db, "Items", itemId));
 	}
 
 	return(
@@ -54,11 +77,9 @@ function ItemCard({title, image, amount, price}) {
 			<div className="flex flex-col">
 				<h2 className="text-2xl font-LogikBold">{title}</h2>
 				<p className="text-xl font-LogikWide">Price: {price}Rwf</p>
-				<p className="text-xl font-LogikWide">Stock: {currentAmount}</p>
 			</div>
 			<div className="flex gap-4">
-				<button onClick={plusItem} className='py-2 px-6 font-LogikBold justify-self-end w-max bg-accent text-white hover:bg-white hover:text-accent transition-all rounded-md'>ADD</button>
-				<button onClick={minusItem} className='py-2 px-6 font-LogikBold justify-self-end w-max hover:bg-gray-600 bg-gray-800 text-white transition-all rounded-md'>REMOVE</button>
+				<button onClick={removeItem} className='py-2 px-6 font-LogikBold justify-self-end w-max hover:bg-red-600 bg-red-800 text-white transition-all rounded-md'>REMOVE</button>
 			</div>
 		</div>
 	)
@@ -67,7 +88,6 @@ function ItemCard({title, image, amount, price}) {
 function AddItem({toggleAddItem}) {
 	const [image, setImage] = useState()
 	const [title, setTitle] = useState()
-	const [amount, setAmount] = useState(0)
 	const [price, setPrice] = useState(0)
 
 	const handleImage = (e) => {
@@ -78,10 +98,6 @@ function AddItem({toggleAddItem}) {
 		setTitle(e.target.value)
 	}
 
-	const handleAmount = (e) => {
-		setAmount(e.target.value)
-	}
-
 	const handlePrice = (e) => {
 		setPrice(e.target.value)
 	}
@@ -90,7 +106,6 @@ function AddItem({toggleAddItem}) {
 		const item = {
 			image,
 			title,
-			amount,
 			price
 		}
 
@@ -104,10 +119,6 @@ function AddItem({toggleAddItem}) {
 				<input onChange={handleImage} type="file" placeholder="Enter image" multiple accept="image/*,audio/*,video/*" className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white  bg-transparent transition-all"></input>
 				<input onChange={handleTitle} type="text" name="title" placeholder="Enter item title" className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white  bg-transparent transition-all"/>
 				<input onChange={handlePrice} type="text" name="price" placeholder="Enter item price" className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white  bg-transparent transition-all"/>
-				<div className="flex flex-col">
-					<label htmlFor="amount" className="text-white text-lg font-LogikWide">amount: {amount}</label>
-					<input onChange={handleAmount} type="range" value={amount} name="amount" placeholder="Enter amount" className="h-4 px-2 appearance-none bg-white rounded-full [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:bg-accent [&::-webkit-slider-thumb]:h-6 [&::-webkit-slider-thumb]:w-6 [&::-webkit-slider-thumb]:rounded-full"/>
-				</div>
 				<div className="flex w-full justify-between">
 					<button onClick={toggleAddItem} className='py-2 px-6 font-LogikBold justify-self-end w-max hover:bg-gray-600 bg-gray-800 text-white transition-all rounded-md'>CANCEL</button>
 					<button onClick={onPublish} className='py-2 px-6 font-LogikBold justify-self-end w-max bg-accent text-white hover:bg-white hover:text-accent transition-all rounded-md'>PUBLISH</button>
@@ -119,15 +130,17 @@ function AddItem({toggleAddItem}) {
 }
 
 export default function UpdateRentals() {
+	const [page,setPage] = useState(1)
 	const [isAddItem, setIsAddItem] = useState(false)
 	const [items, setItems] = useState()
+	const [rentals, setRentals] = useState()
+
 
 	function toggleAddItem() {
 		setIsAddItem(!isAddItem)
 	}
 
 	async function GetItems() {
-
 		const db = getFirestore(app);
 
 		const q = query(collection(db, "Items"));
@@ -135,24 +148,55 @@ export default function UpdateRentals() {
 		const querySnapshot = await getDocs(q);
 		const ItemsData = querySnapshot.docs.map((doc) => doc.data());
      	setItems(ItemsData);
+	}
 
+	async function GetRentals() {
+		const db = getFirestore(app);
+
+		const q = query(collection(db, "Rentals"));
+
+		const querySnapshot = await getDocs(q);
+		const RentalsData = querySnapshot.docs.map((doc) => doc.data());
+     	setRentals(RentalsData);
 	}
 
 	useEffect(() => {
 		GetItems()
+		GetRentals()
 	}, [])
 
 	return(
 		<div className="flex flex-col gap-8 py-8 px-8">
 			<h1 className="font-LogikBold text-4xl">Rentals</h1>
-			<button onClick={toggleAddItem} className="py-2 px-6 font-LogikBold justify-self-end w-max bg-accent text-white hover:bg-white hover:text-accent transition-all rounded-md">Add Item</button>
-			{isAddItem && <AddItem toggleAddItem={toggleAddItem}/>}
 
-			<div className="flex flex-col gap-4">
-				{items && items.map((itemsItem, idx) => (
-					<div key={idx}><ItemCard title={itemsItem.title} image={itemsItem.image} amount={itemsItem.amount} price={itemsItem.price}/></div>
-				))}
+			<div className="flex w-max m-auto items-center gap-16">
+				<h1 onClick={() => setPage(1)} className={`${page==1? 'text-accent underline':'text-white'} text-xl font-LogikBold cursor-pointer`}>Items</h1>
+				<div className="h-6 w-1 bg-gray-100"></div>
+				<h1 onClick={() => setPage(2)} className={`${page==2? 'text-accent underline':'text-white'} text-xl font-LogikBold cursor-pointer`}>Rentals</h1>
 			</div>
+
+			{page==1 &&
+				<>
+					<button onClick={toggleAddItem} className="py-2 px-6 font-LogikBold justify-self-end w-max bg-accent text-white hover:bg-white hover:text-accent transition-all rounded-md">Add Item</button>
+					{isAddItem && <AddItem toggleAddItem={toggleAddItem}/>}
+
+					<div className="flex flex-col gap-4">
+						{items && items.map((itemsItem, idx) => (
+							<div key={idx}><ItemCard title={itemsItem.title} image={itemsItem.image} amount={itemsItem.amount} price={itemsItem.price} itemId={itemsItem.itemId}/></div>
+						))}
+					</div>
+				</>
+			}
+
+			{page==2 &&
+				<>
+					<div className="flex flex-col gap-4">
+						{rentals && rentals.map((rentalsItem, idx) => (
+							<div key={idx}><RentalsCard title={rentalsItem.title} verified={rentalsItem.verified} pickupDate={rentalsItem.pickupDate}  rentalId={rentalsItem.rentalId} rentalDate={rentalsItem.rentalDate} amount={rentalsItem.amount} name={rentalsItem.name} price={rentalsItem.price} phone={rentalsItem.phone}/></div>
+						))}
+					</div>
+				</>
+			}
 		</div>
 	)
 }

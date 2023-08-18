@@ -30,7 +30,7 @@ function EventCard({image, title, type, from, to, location, games, participants}
 
 			<div className="relative h-full w-11/12">
 				<div className="relative flex flex-col sm:left-6 z-10 sm:grid sm:grid-cols-[2fr_3fr] sm:gap-6 h-full">
-					<img className="h-full bg-black w-11/12 m-auto sm:w-full shadow-lg" src={`${image}`} />
+					<div className="h-full bg-black w-11/12 m-auto sm:w-full shadow-lg bg-cover bg-center" style={{backgroundImage: `url(${image})`}} />
 					<div className="text-black pb-16 py-6 px-8 sm:px-0 sm:pb-0 flex flex-col gap-4 justify-center">
 						<h1 className="text-2xl font-LogikBold">{title}</h1>
 						<div className="flex flex-col gap-2">
