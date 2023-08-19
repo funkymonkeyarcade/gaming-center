@@ -114,22 +114,22 @@ function Map() {
 			</div>
 
 			<div className=" flex flex-col gap-8 sm:gap-0 items-center sm:grid sm:grid-cols-2 text-white">
-				<div className="flex flex-col gap-2">
+				<div className="flex flex-col gap-2 items-center sm:items-start">
 					<h1 className='text-xl font-black font-LogikBold'>Kigali, Rwanda</h1>
 					<div className="flex flex-col">
 						<p>KN 3 Rd, Kigali</p>
 					</div>
 				</div>
-				<div className="grid grid-cols-1 sm:flex justify-center sm:justify-between w-full">
-					<div className="flex flex-col">
+				<div className="grid grid-cols-1 sm:flex justify-center items-center gap-4 sm:gap-0 sm:justify-between w-full">
+					<div className="flex flex-col items-center sm:items-start">
 						<h1 className='text-xl font-black font-LogikBold'>Email</h1>
 						<p>arcadefunkymonkey@gmail.com</p>
 					</div>
-					<div className="flex flex-col">
+					<div className="flex flex-col items-center sm:items-start">
 						<h1 className='text-xl font-black font-LogikBold'>Phone</h1>
 						<p>+250 784 674 639</p>
 					</div>
-					<div className="flex flex-col">
+					<div className="flex flex-col items-center sm:items-start">
 						<h1 className='text-xl font-black font-LogikBold'>Hours</h1>
 						<p>10:00 - 22:00</p>
 					</div>
