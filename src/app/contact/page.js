@@ -32,6 +32,8 @@ function Form() {
 	const [email, setEmail] = useState()
 	const [phone, setPhone] = useState()
 	const [message, setMessage] = useState()
+	const [error, setError] = useState()
+	const [success, setSuccess] = useState()
 
 	function handleName(e) {
 		setName(e.target.value)
@@ -49,14 +51,45 @@ function Form() {
 		setMessage(e.target.value)
 	}
 
+	function validateForm() {
+		let isValid = true;
+
+		if (!name || !email || !phone || !message) {
+		  setError('Please fill out all fields.');
+		  isValid = false;
+		} else if (!/\S+@\S+\.\S+/.test(email)) {
+		  setError('Please enter a valid email address.');
+		  isValid = false;
+		}
+
+		return isValid;
+	  }
+
 	function sendMail(e) {
 		e.preventDefault()
+		setError('')
+
+		if (!validateForm()) {
+			return
+		}
 
 		emailjs.sendForm(process.env.NEXT_PUBLIC_SERVICE_ID, process.env.NEXT_PUBLIC_TEMPLATE_ID, form.current, process.env.NEXT_PUBLIC_PUBLIC_KEY).then(result => {
-			console.log(result)
+			setName('')
+			setEmail('')
+			setPhone('')
+			setMessage('')
+			showSuccess()
 		}).catch(error => {
-			console.log(error)
+			setError(error)
 		})
+	}
+
+	function showSuccess() {
+		setSuccess(true)
+
+		setTimeout(() => {
+			setSuccess(false)
+		}, 4000);
 	}
 
 	return (
@@ -71,13 +104,25 @@ function Form() {
 
 			<form className="flex flex-col gap-2 px-8 sm:px-12" ref={form} onSubmit={sendMail}>
 				<div className="flex flex-col w-full sm:grid sm:grid-cols-2 gap-4">
-					<input onChange={handleName} className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white  bg-transparent transition-all " type="text" name="user_name" placeholder="Full name"/>
-					<input onChange={handleEmail} className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white bg-transparent transition-all" type="email" name="user_email" placeholder="E-mail"/>
-					<input onChange={handlePhone} className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white bg-transparent transition-all" type="phone" name="user_phone" placeholder="Phone number"/>
-					<input onChange={handleMessage} className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white bg-transparent transition-all" type="text" name="message" placeholder="Message"/>
+					<input onChange={handleName} value={name} className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white  bg-transparent transition-all " type="text" name="user_name" placeholder="Full name"/>
+					<input onChange={handleEmail} value={email} className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white bg-transparent transition-all" type="email" name="user_email" placeholder="E-mail"/>
+					<input onChange={handlePhone} value={phone} className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white bg-transparent transition-all" type="phone" name="user_phone" placeholder="Phone number"/>
+					<input onChange={handleMessage} value={message} className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white bg-transparent transition-all" type="text" name="message" placeholder="Message"/>
 				</div>
 				<input type="submit" value="Send" className='py-2 px-6 font-LogikBold col-span-2 justify-self-end w-max font-bold bg-accent text-white hover:bg-white hover:text-accent transition-all rounded-md' />
 			</form>
+
+			{success &&
+				<div className="fixed z-50 flex justify-center m-auto bottom-0 w-10/12 p-4 bg-black bg-opacity-80 rounded-lg">
+					<h1 className="text-2xl text-green-600 font-LogikBold">Message successfully sent</h1>
+				</div>
+			}
+
+			{error &&
+				<div className="fixed z-50 flex justify-center m-auto bottom-0 w-10/12 p-4 bg-black bg-opacity-80 rounded-lg">
+					<h1 className="text-2xl text-red-600 font-LogikBold">{error}</h1>
+				</div>
+			}
 
 		</section>
 	)
