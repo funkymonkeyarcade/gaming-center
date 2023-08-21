@@ -96,10 +96,10 @@ function Form() {
 		<section className="flex flex-col sm:grid sm:grid-cols-[2fr_3fr] px-8 sm:px-16 py-40 w-full">
 			<div className="flex flex-col gap-2 text-white">
 				<div className="grid grid-cols-2">
-					<h1 className='text-4xl font-black font-LogikBold'>LET&rsquo;S TALK</h1>
+					<h1 className='text-4xl font-black font-LogikBold'>REGISTER HERE</h1>
 					<Image className="h-full" src={Arrow} />
 				</div>
-				<p className="text-2xl">Share your excitement with us.</p>
+				<p className="text-2xl">Where do you want to participate?</p>
 			</div>
 
 			<form className="flex flex-col gap-2 px-8 sm:px-12" ref={form} onSubmit={sendMail}>
@@ -107,7 +107,7 @@ function Form() {
 					<input onChange={handleName} value={name} className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white  bg-transparent transition-all " type="text" name="user_name" placeholder="Full name"/>
 					<input onChange={handleEmail} value={email} className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white bg-transparent transition-all" type="email" name="user_email" placeholder="E-mail"/>
 					<input onChange={handlePhone} value={phone} className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white bg-transparent transition-all" type="phone" name="user_phone" placeholder="Phone number"/>
-					<input onChange={handleMessage} value={message} className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white bg-transparent transition-all" type="text" name="message" placeholder="Message"/>
+					<input onChange={handleMessage} value={message} className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white bg-transparent transition-all" type="text" name="message" placeholder="Where you want to participate(Video games/Pool games)"/>
 				</div>
 				<input type="submit" value="Send" className='py-2 px-6 font-LogikBold col-span-2 justify-self-end w-max font-bold bg-accent text-white hover:bg-white hover:text-accent transition-all rounded-md' />
 			</form>
