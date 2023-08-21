@@ -9,7 +9,7 @@ export default function Menu({toggleMenu, isMenu}) {
 				<Link href={"/news"}><li onClick={toggleMenu} className='p-2 hover:border-b-2 hover:border-accent cursor-pointer'>NEWS</li></Link>
 				<Link href={"/about"}><li onClick={toggleMenu} className='p-2 hover:border-b-2 hover:border-accent cursor-pointer'>ABOUT</li></Link>
 				{/* <Link href={"/rent"}><li onClick={toggleMenu} className='p-2 hover:border-b-2 hover:border-accent cursor-pointer'>RENTALS</li></Link> */}
-				<Link href={"/contact"}><li onClick={toggleMenu} className='p-2 hover:border-b-2 hover:border-accent cursor-pointer'>CONTACT US</li></Link>
+				<Link href={"/contact"}><li onClick={toggleMenu} className='p-2 hover:border-b-2 hover:border-accent cursor-pointer'>REGISTER</li></Link>
 		  	</ul>
 		</div>
 	)
