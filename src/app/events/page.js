@@ -47,7 +47,7 @@ function EventCard({image, title, type, from, to, location, games, participants}
 								<p className="w-10/12">{games}</p>
 							</div>
 							<div className="sm:flex gap-4">
-								<h2 className="text-base font-LogikBold">PARTICIPATING COUNTRIES</h2>
+								<h2 className="text-base font-LogikBold">PARTICIPANTS</h2>
 								<p>{participants}</p>
 							</div>
 						</div>
