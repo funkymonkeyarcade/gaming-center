@@ -13,7 +13,7 @@ function Hero() {
       <div className='absolute w-full sm:h-full overflow-hidden'>
         <div className='absolute top-0 h-[200%] w-full bg-gradient-to-t from-primary via-primary to-transparent '></div>
         <video autoPlay loop>
-          <source src='https://firebasestorage.googleapis.com/v0/b/gaming-906ed.appspot.com/o/pexels_videos_1957727%20(1080p).mp4?alt=media&token=88425fb4-8328-4b0c-b50b-939d93e10e38' />
+          <source src='https://firebasestorage.googleapis.com/v0/b/gaming-906ed.appspot.com/o/InShot_20230814_150812336.mp4?alt=media&token=ec03c011-2de5-40b6-820f-5427e408a59d' />
         </video>
       </div>
 
