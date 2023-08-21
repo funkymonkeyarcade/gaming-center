@@ -51,7 +51,7 @@ export function NewsList() {
 		dots: false,
 		infinite: true,
 		speed: 500,
-		slidesToShow: 4,
+		slidesToShow: news.length<4? news.length:4,
 		slidesToScroll: 1,
 		nextArrow: <Next />,
       	prevArrow: <Prev />,
@@ -70,6 +70,8 @@ export function NewsList() {
 			},
 		  ]
 	}
+
+	console.log(news)
 
 	async function GetNews() {
 

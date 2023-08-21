@@ -21,17 +21,17 @@ function EventCard({image, title, type, from, to, location, games, participants}
 					<h2 className="text-xl text-accent font-LogikWide">{getShortMonth(from).shortMonth}</h2>
 					<h1 className="text-5xl text-white font-LogikBold">{getShortMonth(from).day}</h1>
 				</div>
-				<div className="h-12 sm:h-2 bg-white w-full sm:w-5/12 rounded-lg"></div>
+				{/* <div className="h-12 sm:h-2 bg-white w-full sm:w-5/12 rounded-lg"></div>
 				<div className="flex flex-col items-center">
 					<h2 className="text-xl text-accent font-LogikWide">{getShortMonth(to).shortMonth}</h2>
 					<h1 className="text-5xl text-white font-LogikBold">{getShortMonth(to).day}</h1>
-				</div>
+				</div> */}
 			</div>
 
 			<div className="relative h-full w-11/12">
 				<div className="relative flex flex-col sm:left-6 z-10 sm:grid sm:grid-cols-[2fr_3fr] sm:gap-6 h-full">
 					<div className="h-full bg-black w-11/12 m-auto sm:w-full shadow-lg bg-cover bg-center" style={{backgroundImage: `url(${image})`}} />
-					<div className="text-black pb-16 py-6 px-8 sm:px-0 sm:pb-0 flex flex-col gap-4 justify-center">
+					<div className="text-black pb-16 py-6 px-8 sm:px-0 sm:pb-4 flex flex-col gap-4 justify-center">
 						<h1 className="text-2xl font-LogikBold w-11/12">{title}</h1>
 						<div className="flex flex-col gap-2">
 							<div className="sm:flex gap-4">
