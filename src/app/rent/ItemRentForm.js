@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { calculateDaysDifference, calculateTotalPrice, uploadRental } from "./helpers";
+import { uploadRental } from "./helpers";
 import { getFirestore } from "firebase/firestore";
 
 import Calendar from 'react-calendar';
@@ -22,26 +22,47 @@ function IdCard({id, toggleIdView}) {
 	)
 }
 
-export function ItemRentForm({ image, title, price, itemId, type, deposit, delivery, bookings, setIsRentForm }) {
-	const [fromDate, setFromDate] = useState();
-	const [toDate, setToDate] = useState();
+export function ItemRentForm({ image, title, price, itemId, amount, deposit, delivery, bookings, setIsRentForm }) {
 	const [name, setName] = useState();
 	const [phone, setPhone] = useState();
 	const [IdView, setIdView,] = useState(false);
 	const [rentalId, setRentalId] = useState();
+	const [dates, setDates] = useState();
+
 	const [active, setActive] = useState(false);
 	const [total,setTotal] = useState(price)
 	const [error, setError] = useState();
 
-	const [date, setDate] = useState();
-
-	useEffect(() => {
-		if (fromDate && toDate) {
-		  const daysDiff = calculateDaysDifference(fromDate, toDate); // Implement this function to calculate days difference
-		  const totalPrice = calculateTotalPrice(daysDiff, delivery, deposit, price); // Implement this function to calculate total price
-		  setTotal(totalPrice);
+	useEffect(()=> {
+		if(dates) {
+			handleTotal()
 		}
-	}, [fromDate, toDate, delivery, deposit, price]);
+	}, [dates])
+
+	function daysInRange([start, end]) {
+		if (!start || !end) {
+		  return 1; // Either start or end date is missing
+		}
+
+		const startDate = new Date(start);
+		const endDate = new Date(end);
+		const oneDay = 24 * 60 * 60 * 1000; // One day in milliseconds
+		const numDays = Math.floor(Math.abs((startDate - endDate) / oneDay)) + 1;
+		return numDays;
+	}
+
+	function handleTotal() {
+		setTotal((price*daysInRange(dates))+ (deposit || 0) + (delivery || 0))
+	}
+
+	function tileDisabled({ date, view }) {
+		// Add class to tiles in month view only
+		if (bookings.length >= amount) {
+		  // Check if a date React-Calendar wants to check is within any of the ranges
+		  return isWithinRanges(date, disabledRanges);
+		}
+	  }
+
 
 	const handleName = (e) => {
 		setName(e.target.value);
@@ -51,36 +72,8 @@ export function ItemRentForm({ image, title, price, itemId, type, deposit, deliv
 		setPhone(e.target.value);
 	};
 
-	const handleFromDate = async (e) => {
-		setFromDate(e.target.value)
-	};
-
-	const handleToDate = async (e) => {
-		setToDate(e.target.value)
-	};
-
-	function handleDate(nextValue) {
-		setDate(nextValue);
-		console.log(date)
-	}
-
-	const checkItemAvailability = () => {
-		try {
-			const isAvailable = bookings.every(booking => {
-				const bookingPickupDate = booking.pickupDate.toDate();
-				const bookingReturnDate = booking.returnDate.toDate();
-
-				// Check for overlapping date ranges
-				return (
-				  pickupDate >= bookingReturnDate ||
-				  returnDate <= bookingPickupDate
-				);
-			});
-
-			return isAvailable;
-		}  catch (error) {
-			setError(error)
-		}
+	function handleDates(nextValue) {
+		setDates(nextValue);
 	}
 
 	const onPublish = async () => {
@@ -90,8 +83,7 @@ export function ItemRentForm({ image, title, price, itemId, type, deposit, deliv
 			price: price,
 			name,
 			phone,
-			fromDate,
-			toDate,
+			dates,
 			total,
 		};
 
@@ -109,7 +101,6 @@ export function ItemRentForm({ image, title, price, itemId, type, deposit, deliv
 			setRentalId(rentalId);
 			setIdView(true);
 		}).catch(error => {
-			console.log(error);
 			setError(error.message);
 		});
 	};
@@ -121,15 +112,15 @@ export function ItemRentForm({ image, title, price, itemId, type, deposit, deliv
 
 	return (
 		<div className="fixed z-50 top-0 left-0 h-screen w-screen grid place-items-center bg-black bg-opacity-90">
-			<div className="flex flex-col items-center gap-6 py-8 px-8 w-full sm:w-8/12">
+			<div className="flex flex-col items-center  gap-6 py-8 px-8 w-full sm:w-8/12">
 				{IdView && <IdCard id={rentalId} toggleIdView={toggleIdView} />}
 				<h1 className="font-LogikBold text-2xl">Rental Form</h1>
 
-				<div className="flex gap-16">
+				<div className="flex items-center gap-16">
 					<div className="flex flex-col gap-8">
-						<div className="flex items-center gap-4">
-							<img src={image} className="h-20 w-20" />
-							<div className="grid grid-cols-2 w-full items-center justify-center text-end">
+						<div className="flex flex-col items-center gap-4">
+							<img src={image} className="w-8/12 m-auto aspect-auto" width={100} height={100} />
+							<div className="grid grid-cols-2 w-full items-center justify-center">
 								<p className="text-white text-lg font-LogikBold">Item name: <span className="font-LogikWide">{title}</span></p>
 								<p className="text-white text-lg font-LogikBold">Item price: <span className="font-LogikWide">{price}Rwf</span></p>
 								{deposit && <p className="text-white text-lg font-LogikBold">Deposit: <span className="font-LogikWide">{deposit}Rwf</span></p>}
@@ -140,17 +131,12 @@ export function ItemRentForm({ image, title, price, itemId, type, deposit, deliv
 						<input onChange={handleName} required type="text" name="Name" placeholder="Enter your Name" className="h-8 w-full px-2 border-b-2 focus:border-accent outline-none text-white  bg-transparent transition-all" />
 						<input onChange={handlePhone} required type="text" name="Phone" placeholder="Enter your Phone number" className="h-8 w-full px-2 border-b-2 focus:border-accent outline-none text-white  bg-transparent transition-all" />
 
-						<div className="flex flex-col gap-2 w-full">
-							<label htmlFor="amount" className="text-white text-lg font-LogikWide">Pickup date</label>
-							<input onChange={handleFromDate} type="date" name="from" placeholder="Enter the pickup date" className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white bg-transparent transition-all" style={{ colorScheme: 'dark' }} />
-						</div>
-
-						{fromDate && <div className="flex flex-col gap-2 w-full">
-							<label htmlFor="amount" className="text-white text-lg font-LogikWide">Return date</label>
-							<input onChange={handleToDate} type="date" name="from" placeholder="Enter the pickup date" className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white bg-transparent transition-all" style={{ colorScheme: 'dark' }} />
-						</div>}
 					</div>
-					<Calendar selectRange={true} allowPartialRange={true} className="text-black font-LogikWide p-8 rounded-lg" onChange={handleDate} value={date} />
+
+					<div className="flex flex-col gap-4 items-center">
+						<h2 className="text-lg font-LogikBold text-center">Select pickup date and return date:</h2>
+						<Calendar tileDisabled={tileDisabled} selectRange={true} allowPartialRange={true} className="text-black font-LogikWide p-8 rounded-lg" onChange={handleDates} value={dates} />
+					</div>
 				</div>
 
 				{error && <p className="text-red-800 text-xl font-LogikBold">{error}</p>}
