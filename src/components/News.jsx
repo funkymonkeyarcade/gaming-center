@@ -71,8 +71,6 @@ export function NewsList() {
 		  ]
 	}
 
-	console.log(news)
-
 	async function GetNews() {
 
 		const db = getFirestore(app);
