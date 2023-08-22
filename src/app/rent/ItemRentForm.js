@@ -1,8 +1,10 @@
 "use client";
-import { app } from "@/utils/firebase";
-import { getFirestore, query, collection, getDocs, where } from "firebase/firestore";
 import { useState, useEffect } from "react";
-import { uploadRental } from "./helpers";
+import { calculateDaysDifference, calculateTotalPrice, uploadRental } from "./helpers";
+import { getFirestore } from "firebase/firestore";
+
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
 
 function IdCard({id, toggleIdView}) {
 	return(
@@ -29,23 +31,9 @@ export function ItemRentForm({ image, title, price, itemId, type, deposit, deliv
 	const [rentalId, setRentalId] = useState();
 	const [active, setActive] = useState(false);
 	const [total,setTotal] = useState(price)
-
 	const [error, setError] = useState();
 
-	const calculateDaysDifference = (startDate, endDate) => {
-		const oneDay = 24 * 60 * 60 * 1000; // Number of milliseconds in a day
-		const startTimestamp = new Date(startDate).getTime();
-		const endTimestamp = new Date(endDate).getTime();
-		const daysDifference = Math.round(Math.abs((startTimestamp - endTimestamp) / oneDay));
-		return daysDifference;
-	  };
-
-	  // Function to calculate the total price based on days, delivery, deposit, and item price
-	  const calculateTotalPrice = (days, deliveryCost, deposit, itemPrice) => {
-		const totalWithoutDeposit = days * itemPrice + (deliveryCost || 0);
-		const totalPrice = totalWithoutDeposit + (deposit || 0);
-		return totalPrice;
-	  };
+	const [date, setDate] = useState();
 
 	useEffect(() => {
 		if (fromDate && toDate) {
@@ -63,7 +51,6 @@ export function ItemRentForm({ image, title, price, itemId, type, deposit, deliv
 		setPhone(e.target.value);
 	};
 
-
 	const handleFromDate = async (e) => {
 		setFromDate(e.target.value)
 	};
@@ -72,16 +59,40 @@ export function ItemRentForm({ image, title, price, itemId, type, deposit, deliv
 		setToDate(e.target.value)
 	};
 
+	function handleDate(nextValue) {
+		setDate(nextValue);
+		console.log(date)
+	}
+
+	const checkItemAvailability = () => {
+		try {
+			const isAvailable = bookings.every(booking => {
+				const bookingPickupDate = booking.pickupDate.toDate();
+				const bookingReturnDate = booking.returnDate.toDate();
+
+				// Check for overlapping date ranges
+				return (
+				  pickupDate >= bookingReturnDate ||
+				  returnDate <= bookingPickupDate
+				);
+			});
+
+			return isAvailable;
+		}  catch (error) {
+			setError(error)
+		}
+	}
+
 	const onPublish = async () => {
 		const rental = {
-			title,
+			item: title,
 			itemId,
 			price: price,
 			name,
 			phone,
-			rentalDate: new Date(),
-			pickupDate,
-			verified: false
+			fromDate,
+			toDate,
+			total,
 		};
 
 		if (!name) {
@@ -110,32 +121,37 @@ export function ItemRentForm({ image, title, price, itemId, type, deposit, deliv
 
 	return (
 		<div className="fixed z-50 top-0 left-0 h-screen w-screen grid place-items-center bg-black bg-opacity-90">
-			<div className="flex flex-col items-center gap-6 py-8 px-8 w-full sm:w-5/12">
+			<div className="flex flex-col items-center gap-6 py-8 px-8 w-full sm:w-8/12">
 				{IdView && <IdCard id={rentalId} toggleIdView={toggleIdView} />}
 				<h1 className="font-LogikBold text-2xl">Rental Form</h1>
 
-				<div className="flex items-center gap-4">
-					<img src={image} className="h-20 w-20" />
-					<div className="grid grid-cols-2 w-full items-center justify-center text-end">
-						<p className="text-white text-lg font-LogikBold">Item name: <span className="font-LogikWide">{title}</span></p>
-						<p className="text-white text-lg font-LogikBold">Item price: <span className="font-LogikWide">{price}Rwf</span></p>
-						{deposit && <p className="text-white text-lg font-LogikBold">Deposit: <span className="font-LogikWide">{deposit}Rwf</span></p>}
-						{delivery && <p className="text-white text-lg font-LogikBold">Delivery: <span className="font-LogikWide">{delivery}Rwf</span></p>}
+				<div className="flex gap-16">
+					<div className="flex flex-col gap-8">
+						<div className="flex items-center gap-4">
+							<img src={image} className="h-20 w-20" />
+							<div className="grid grid-cols-2 w-full items-center justify-center text-end">
+								<p className="text-white text-lg font-LogikBold">Item name: <span className="font-LogikWide">{title}</span></p>
+								<p className="text-white text-lg font-LogikBold">Item price: <span className="font-LogikWide">{price}Rwf</span></p>
+								{deposit && <p className="text-white text-lg font-LogikBold">Deposit: <span className="font-LogikWide">{deposit}Rwf</span></p>}
+								{delivery && <p className="text-white text-lg font-LogikBold">Delivery: <span className="font-LogikWide">{delivery}Rwf</span></p>}
+							</div>
+						</div>
+
+						<input onChange={handleName} required type="text" name="Name" placeholder="Enter your Name" className="h-8 w-full px-2 border-b-2 focus:border-accent outline-none text-white  bg-transparent transition-all" />
+						<input onChange={handlePhone} required type="text" name="Phone" placeholder="Enter your Phone number" className="h-8 w-full px-2 border-b-2 focus:border-accent outline-none text-white  bg-transparent transition-all" />
+
+						<div className="flex flex-col gap-2 w-full">
+							<label htmlFor="amount" className="text-white text-lg font-LogikWide">Pickup date</label>
+							<input onChange={handleFromDate} type="date" name="from" placeholder="Enter the pickup date" className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white bg-transparent transition-all" style={{ colorScheme: 'dark' }} />
+						</div>
+
+						{fromDate && <div className="flex flex-col gap-2 w-full">
+							<label htmlFor="amount" className="text-white text-lg font-LogikWide">Return date</label>
+							<input onChange={handleToDate} type="date" name="from" placeholder="Enter the pickup date" className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white bg-transparent transition-all" style={{ colorScheme: 'dark' }} />
+						</div>}
 					</div>
+					<Calendar selectRange={true} allowPartialRange={true} className="text-black font-LogikWide p-8 rounded-lg" onChange={handleDate} value={date} />
 				</div>
-
-				<input onChange={handleName} required type="text" name="Name" placeholder="Enter your Name" className="h-8 w-full px-2 border-b-2 focus:border-accent outline-none text-white  bg-transparent transition-all" />
-				<input onChange={handlePhone} required type="text" name="Phone" placeholder="Enter your Phone number" className="h-8 w-full px-2 border-b-2 focus:border-accent outline-none text-white  bg-transparent transition-all" />
-
-				<div className="flex flex-col gap-2 w-full">
-					<label htmlFor="amount" className="text-white text-lg font-LogikWide">Pickup date</label>
-					<input onChange={handleFromDate} type="date" name="from" placeholder="Enter the pickup date" className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white bg-transparent transition-all" style={{ colorScheme: 'dark' }} />
-				</div>
-
-				{fromDate && <div className="flex flex-col gap-2 w-full">
-					<label htmlFor="amount" className="text-white text-lg font-LogikWide">Return date</label>
-					<input onChange={handleToDate} type="date" name="from" placeholder="Enter the pickup date" className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white bg-transparent transition-all" style={{ colorScheme: 'dark' }} />
-				</div>}
 
 				{error && <p className="text-red-800 text-xl font-LogikBold">{error}</p>}
 				{<p className="text-red-800 text-xl font-LogikBold">Total: {total}</p>}

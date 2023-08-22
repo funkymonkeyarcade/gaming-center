@@ -32,6 +32,7 @@ function CalendarCard({title, image, from, to}) {
 
 		const querySnapshot = await getDocs(q);
 		const eventData = querySnapshot.docs.map((doc) => doc.data());
+		eventData.sort((a, b) => new Date(a.from) - new Date(b.from))
      	setEvents(eventData);
 
 	}

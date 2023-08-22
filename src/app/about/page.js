@@ -33,7 +33,7 @@ export default function About() {
 			<AboutText />
 			<Calendar />
 			<TournamentText />
-			<Newsletter />
+			{/* <Newsletter /> */}
 		</div>
 	)
 }

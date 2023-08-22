@@ -27,7 +27,7 @@ export function Footer() {
 		  </ul>
 		</div>
 		<div className='flex justify-center w-full text-center sm:text-left'>
-		  <p className='text-sm font-LogikWide'>© All rights reserved – Native rekord</p>
+		  <p className='text-sm font-LogikWide'>© All rights reserved – Native rekord Ltd</p>
 		</div>
 	  </footer>
 	)
