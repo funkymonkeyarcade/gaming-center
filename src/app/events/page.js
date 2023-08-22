@@ -66,12 +66,14 @@ export default function Events() {
 
 	async function GetEvents() {
 
-		const db = getFirestore(app);
+		const db = getFirestore(app)
 
-		const q = query(collection(db, "Events"));
+		const q = query(collection(db, "Events"))
 
-		const querySnapshot = await getDocs(q);
-		const eventsData = querySnapshot.docs.map((doc) => doc.data());
+		const querySnapshot = await getDocs(q)
+		const eventsData = querySnapshot.docs.map((doc) => doc.data())
+		eventsData.sort((a, b) => new Date(a.from) - new Date(b.from))
+
      	setEvents(eventsData);
 
 	}

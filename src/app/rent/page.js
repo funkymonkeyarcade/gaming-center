@@ -6,40 +6,8 @@ import { getFirestore,setDoc, doc, updateDoc, query, collection, querySnapshot, 
 import { useState, useEffect } from "react"
 import { ItemRentForm } from "./ItemRentForm";
 
-export async function uploadRental({title, amount, price, name, rentalDate, pickupDate, verified, itemId}) {
-	const rentalId = uniqid()
 
-	const db = getFirestore(app);
-	return await setDoc(doc(db, "Rentals", rentalId), {
-		title,
-		itemId,
-		price,
-		name,
-		rentalDate,
-		pickupDate,
-		verified,
-		rentalId
-	}).then(() => rentalId)
-}
-
-export function IdCard({id, toggleIdView}) {
-	console.log(id)
-	return(
-		<div className="absolute z-50 top-0 left-0 h-screen w-screen grid place-items-center bg-black bg-opacity-90">
-			<div className="flex flex-col gap-16">
-				<h1 className="text-green-700 text-xl font-LogikBold">Item booked successfully</h1>
-				<div className="font-LogikBold flex gap-8">
-					<h1 className="text-2xl text-white">Rental ID: </h1>
-					<h2 className="text-2xl text-accent">{id}</h2>
-				</div>
-				<h2 className="text-red-800 font-LogikBold">Please remember to copy this ID <br />because it will be used on checkout</h2>
-				<button onClick={toggleIdView} className='py-2 px-6 font-LogikBold hover:bg-gray-600 bg-gray-800 text-white transition-all rounded-md'>Done</button>
-			</div>
-		</div>
-	)
-}
-
-function ItemCard({title, image, price, itemId}) {
+function ItemCard({title, image, price, itemId, amount, type, deposit, delivery, bookings}) {
 	const [isRentForm,setIsRentForm] = useState(false)
 
 	function rentItem() {
@@ -47,52 +15,84 @@ function ItemCard({title, image, price, itemId}) {
 	}
 
 	return(
-		<div className="w-full h-full p-6 flex justify-between items-center gap-8 bg-black bg-opacity-50 rounded-lg shadow-lg text-white">
-			<img src={image} width={100} height={100} alt={title}/>
+		<div className="w-full h-full p-4 flex flex-col justify-between items-center gap-8 bg-black bg-opacity-50 rounded-lg shadow-lg text-white">
+			<img src={image} className="w-full aspect-auto" width={100} height={100} alt={title}/>
 			<div className="flex flex-col gap-2">
 				<div className="flex flex-col">
 					<h2 className="text-2xl font-LogikBold">{title}</h2>
-					<p className="text-xl font-LogikWide">Price: {price}Rwf</p>
+					<p className="text-xl font-LogikWide text-white">Price: <span className="text-accent">Rwf{price}</span>/day</p>
 				</div>
 				<div className="flex gap-4">
 					<button onClick={rentItem} className='py-2 px-6 font-LogikBold justify-self-end w-max bg-accent text-white hover:bg-white hover:text-accent transition-all rounded-md'>RENT</button>
 				</div>
 			</div>
 
-			{isRentForm && <ItemRentForm title={title} image={image} price={price} itemId={itemId} setIsRentForm={rentItem}/>}
+			{isRentForm && <ItemRentForm title={title} amount={amount} bookings={bookings} delivery={delivery} deposit={deposit} type={type} image={image} price={price} itemId={itemId} setIsRentForm={rentItem}/>}
+
 		</div>
 	)
 }
 
 export default function Rent() {
-	const [items, setItems] = useState()
+	const [videoGames, setVideoGames] = useState()
+	const [interactiveGames, setInteractiveGames] = useState()
+	const [page, setPage] = useState(1)
 
-	async function GetItems() {
+	async function GetVideoGames() {
 
 		const db = getFirestore(app);
 
-		const q = query(collection(db, "Items"));
+		const q = query(collection(db, "video-games"));
 
 		const querySnapshot = await getDocs(q);
 		const ItemsData = querySnapshot.docs.map((doc) => doc.data());
-     	setItems(ItemsData);
+     	setVideoGames(ItemsData);
+
+	}
+
+	async function GetInteractiveGames() {
+
+		const db = getFirestore(app);
+
+		const q = query(collection(db, "interactive-games"));
+
+		const querySnapshot = await getDocs(q);
+		const ItemsData = querySnapshot.docs.map((doc) => doc.data());
+     	setInteractiveGames(ItemsData);
 
 	}
 
 	useEffect(() => {
-		GetItems()
+		GetVideoGames()
+		GetInteractiveGames()
 	}, [])
 
 	return (
-		<div className="flex flex-col gap-8 items-center bg-primary pb-24">
-			<div className="flex flex-col pt-32 pb-24 items-center justify-center w-full bg-[linear-gradient(to_top,rgba(23,15,35,1),rgba(23,15,35,0)_90%),url('/cool-geometric-triangular-figure-neon-laser-light-great-backgrounds.jpg')]">
+		<div className="flex flex-col gap-16 items-center bg-primary pb-24">
+			<div className="flex flex-col pt-32 pb-8 items-center justify-center w-full bg-[linear-gradient(to_top,rgba(23,15,35,1),rgba(23,15,35,0)_90%),url('/cool-geometric-triangular-figure-neon-laser-light-great-backgrounds.jpg')]">
 				<h1 className="text-white font-LogikBold text-5xl">Rent</h1>
 			</div>
-			<div className="grid sm:grid-cols-3 gap-12 w-11/12">
-				{items && items.map((itemsItem, idx) => (
-					<div key={idx}><ItemCard title={itemsItem.title} image={itemsItem.image} price={itemsItem.price} itemId={itemsItem.itemId}/></div>
-				))}
+			<div className="flex w-max m-auto items-center gap-16">
+				<h1 onClick={() => setPage(1)} className={`${page==1? 'text-accent underline':'text-white'} text-xl font-LogikBold cursor-pointer`}>Video Games</h1>
+				<div className="h-6 w-1 bg-gray-100"></div>
+				<h1 onClick={() => setPage(2)} className={`${page==2? 'text-accent underline':'text-white'} text-xl font-LogikBold cursor-pointer`}>Interactive Games</h1>
 			</div>
+
+			{page==1 &&
+				<div className="grid sm:grid-cols-3 gap-12 w-11/12">
+					{videoGames && videoGames.map((videoGamesItem, idx) => (
+						<div key={idx}><ItemCard title={videoGamesItem.title} bookings={videoGamesItem.bookings} delivery={videoGamesItem.delivery} deposit={videoGamesItem.deposit} type={videoGamesItem.type} amount={videoGamesItem.amount} image={videoGamesItem.image} price={videoGamesItem.price} itemId={videoGamesItem.itemId}/></div>
+					))}
+				</div>
+			}
+
+			{page==2 &&
+				<div className="grid sm:grid-cols-3 gap-12 w-11/12">
+					{interactiveGames && interactiveGames.map((interactiveGamesItem, idx) => (
+						<div key={idx}><ItemCard title={interactiveGamesItem.title} bookings={interactiveGamesItem.bookings} delivery={interactiveGamesItem.delivery} deposit={interactiveGamesItem.deposit} type={interactiveGamesItem.type} amount={interactiveGamesItem.amount} image={interactiveGamesItem.image} price={interactiveGamesItem.price} itemId={interactiveGamesItem.itemId}/></div>
+					))}
+				</div>
+			}
 		</div>
 	)
 }
