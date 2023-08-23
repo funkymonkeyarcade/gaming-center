@@ -63,7 +63,7 @@ export default function Article({params}) {
 				}
 			</div>
 			<NewsList />
-			<Newsletter />
+			{/* <Newsletter /> */}
 		</div>
 	)
 }
