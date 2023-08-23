@@ -14,7 +14,7 @@ function ItemCard({title, image, price, itemId, amount, type, deposit, delivery,
 	}
 
 	return(
-		<div className="w-full h-full p-4 flex flex-col justify-between items-center gap-8 bg-black bg-opacity-50 rounded-lg shadow-lg text-white">
+		<div className="w-full h-full p-4 flex flex-col justify- gap-8 bg-black bg-opacity-50 rounded-lg shadow-lg text-white">
 			<img src={image} className="w-full aspect-auto" width={100} height={100} alt={title}/>
 			<div className="flex flex-col gap-2">
 				<div className="flex flex-col">
