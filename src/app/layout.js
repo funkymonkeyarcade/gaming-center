@@ -2,6 +2,7 @@ import { Header } from '@/components/Header'
 import './globals.css'
 import { Footer } from '@/components/Footer'
 import { FirebaseAnalytics } from "@/utils/Analytics"
+import { Analytics } from '@vercel/analytics/react';
 
 export const metadata = {
   title: 'Game Center',
@@ -17,6 +18,7 @@ export default function RootLayout({ children }) {
           {children}
         <Footer />
         <FirebaseAnalytics />
+        <Analytics />
       </body>
     </html>
   )
