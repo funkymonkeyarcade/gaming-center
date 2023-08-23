@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { uploadItem } from "./helpers";
 
-export function AddItem({ toggleAddItem }) {
+export function AddItem({ toggleAddItem, onAddItem }) {
 	const [image, setImage] = useState();
 	const [title, setTitle] = useState();
 	const [type, setType] = useState('video-games');
@@ -81,6 +81,7 @@ export function AddItem({ toggleAddItem }) {
 
 		uploadItem(item).then(() => {
 			showSuccess()
+			onAddItem()
 			setAmount('')
 			setDelivery('')
 			setDeposit('')

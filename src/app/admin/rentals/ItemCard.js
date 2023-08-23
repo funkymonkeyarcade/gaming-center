@@ -2,11 +2,13 @@
 import { app } from "@/utils/firebase";
 import { getFirestore, doc, deleteDoc } from "firebase/firestore";
 
-export function ItemCard({ title, image, price, itemId }) {
+export function ItemCard({ onDelete, title, type, image, price, itemId }) {
 
 	async function removeItem() {
 		const db = getFirestore(app);
-		await deleteDoc(doc(db, "Items", itemId));
+		await deleteDoc(doc(db, type, itemId)).then(() => {
+			onDelete()
+		});
 	}
 
 	return (

@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { uploadRental } from "./helpers";
-import { getFirestore } from "firebase/firestore";
+import { isWithinRanges, uploadRental } from "./helpers";
 
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
@@ -22,22 +21,33 @@ function IdCard({id, toggleIdView}) {
 	)
 }
 
-export function ItemRentForm({ image, title, price, itemId, amount, deposit, delivery, bookings, setIsRentForm }) {
+export function ItemRentForm({ image, title, type, price, itemId, amount, deposit, delivery, bookings, setIsRentForm, loadItems }) {
 	const [name, setName] = useState();
 	const [phone, setPhone] = useState();
 	const [IdView, setIdView,] = useState(false);
 	const [rentalId, setRentalId] = useState();
 	const [dates, setDates] = useState();
+	const [ageVerification, setAgeVerification] = useState()
 
 	const [active, setActive] = useState(false);
 	const [total,setTotal] = useState(price)
 	const [error, setError] = useState();
+	const [success, setSuccess] = useState()
 
 	useEffect(()=> {
 		if(dates) {
 			handleTotal()
 		}
 	}, [dates])
+
+	useEffect(() => {
+		console.log(dates," : ", ageVerification)
+		if (name && phone && dates && ageVerification) {
+			setActive(true)
+		} else {
+			setActive(false)
+		}
+	}, [name,phone,dates,ageVerification])
 
 	function daysInRange([start, end]) {
 		if (!start || !end) {
@@ -56,10 +66,11 @@ export function ItemRentForm({ image, title, price, itemId, amount, deposit, del
 	}
 
 	function tileDisabled({ date, view }) {
+		const transformedBookings = bookings.map(booking => [booking.from, booking.to]);
 		// Add class to tiles in month view only
 		if (bookings.length >= amount) {
 		  // Check if a date React-Calendar wants to check is within any of the ranges
-		  return isWithinRanges(date, disabledRanges);
+			return isWithinRanges(date, transformedBookings);
 		}
 	  }
 
@@ -72,36 +83,65 @@ export function ItemRentForm({ image, title, price, itemId, amount, deposit, del
 		setPhone(e.target.value);
 	};
 
+	const handleAgeVerification = (e) => {
+		setAgeVerification(e.target.checked);
+	};
+
 	function handleDates(nextValue) {
 		setDates(nextValue);
+	}
+
+
+	function showSuccess() {
+		setSuccess(true)
+
+		setTimeout(() => {
+			setSuccess(false)
+		}, 4000);
+	}
+
+	function showError(message) {
+		setError(message)
+
+		setTimeout(() => {
+			setError('')
+		}, 4000);
 	}
 
 	const onPublish = async () => {
 		const rental = {
 			item: title,
+			type,
 			itemId,
-			price: price,
 			name,
 			phone,
 			dates,
 			total,
+			onError: showError
 		};
 
 		if (!name) {
-			setError("Enter name");
+			showError("Enter name");
 			return;
 		}
 
 		if (!phone) {
-			setError("Enter phone number");
+			showError("Enter phone number");
+			return;
+		}
+
+		if (!dates) {
+			showError("Select pickup and return date");
 			return;
 		}
 
 		uploadRental(rental).then((rentalId) => {
 			setRentalId(rentalId);
 			setIdView(true);
+			showSuccess()
+			loadItems()
 		}).catch(error => {
-			setError(error.message);
+			showError(error.message);
 		});
 	};
 
@@ -112,14 +152,14 @@ export function ItemRentForm({ image, title, price, itemId, amount, deposit, del
 
 	return (
 		<div className="fixed z-50 top-0 left-0 h-screen w-screen grid place-items-center bg-black bg-opacity-90">
-			<div className="flex flex-col items-center  gap-6 py-8 px-8 w-full sm:w-8/12">
+			<div className="flex flex-col items-center  gap-4 py-8 px-8 w-full sm:w-8/12">
 				{IdView && <IdCard id={rentalId} toggleIdView={toggleIdView} />}
-				<h1 className="font-LogikBold text-2xl">Rental Form</h1>
+				<h1 className="font-LogikBold text-xl">Rental Form</h1>
 
 				<div className="flex items-center gap-16">
 					<div className="flex flex-col gap-8">
-						<div className="flex flex-col items-center gap-4">
-							<img src={image} className="w-8/12 m-auto aspect-auto" width={100} height={100} />
+						<div className="flex items-center gap-4">
+							<img src={image} className="w-4/12 m-auto aspect-auto" width={100} height={100} />
 							<div className="grid grid-cols-2 w-full items-center justify-center">
 								<p className="text-white text-lg font-LogikBold">Item name: <span className="font-LogikWide">{title}</span></p>
 								<p className="text-white text-lg font-LogikBold">Item price: <span className="font-LogikWide">{price}Rwf</span></p>
@@ -139,13 +179,29 @@ export function ItemRentForm({ image, title, price, itemId, amount, deposit, del
 					</div>
 				</div>
 
-				{error && <p className="text-red-800 text-xl font-LogikBold">{error}</p>}
 				{<p className="text-red-800 text-xl font-LogikBold">Total: {total}</p>}
+
+				<div className="flex gap-2">
+					<input type="checkbox" onChange={handleAgeVerification} value={ageVerification} />
+					<p>I confirm that I am at least 18 years old and eligible for this rental.</p>
+				</div>
 
 				<div className="flex w-full justify-between">
 					<button onClick={setIsRentForm} className='py-2 px-6 font-LogikBold justify-self-end w-max hover:bg-gray-600 bg-gray-800 text-white transition-all rounded-md'>CANCEL</button>
 					<button onClick={onPublish} className={`py-2 px-6 font-LogikBold justify-self-end w-max ${active ? `bg-accent text-white hover:bg-white hover:text-accent` : 'bg-gray-500'} transition-all rounded-md`} disabled={!active}>BOOK</button>
 				</div>
+
+				{success &&
+					<div className="fixed z-50 flex justify-center m-auto bottom-0 left-0 w-screen p-4 bg-black bg-opacity-80 rounded-lg">
+						<h1 className="text-2xl text-green-600 font-LogikBold">Item Booked successfully</h1>
+					</div>
+				}
+
+				{error &&
+					<div className="fixed z-50 flex justify-center m-auto bottom-0 left-0 w-screen p-4 bg-black bg-opacity-80 rounded-lg">
+						<h1 className="text-2xl text-red-600 font-LogikBold">{error}</h1>
+					</div>
+				}
 			</div>
 		</div>
 	);

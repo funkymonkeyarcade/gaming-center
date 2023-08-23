@@ -4,7 +4,6 @@ import { app } from "@/utils/firebase"
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getFirestore,setDoc, query, collection, querySnapshot, getDocs } from "firebase/firestore";
 import { useState, useEffect } from "react"
-import uniqid from 'uniqid';
 import { RentalsCard } from "./RentalsCard";
 import { ItemCard } from "./ItemCard";
 import { AddItem } from "./AddItem";
@@ -12,7 +11,8 @@ import { AddItem } from "./AddItem";
 export default function UpdateRentals() {
 	const [page,setPage] = useState(1)
 	const [isAddItem, setIsAddItem] = useState(false)
-	const [items, setItems] = useState()
+	const [videoGames, setVideoGames] = useState()
+	const [interactiveGames, setInteractiveGames] = useState()
 	const [rentals, setRentals] = useState()
 
 
@@ -20,15 +20,35 @@ export default function UpdateRentals() {
 		setIsAddItem(!isAddItem)
 	}
 
-	async function GetItems() {
+	async function GetVideoGames() {
+
 		const db = getFirestore(app);
 
-		const q = query(collection(db, "Items"));
+		const q = query(collection(db, "video-games"));
 
 		const querySnapshot = await getDocs(q);
 		const ItemsData = querySnapshot.docs.map((doc) => doc.data());
-     	setItems(ItemsData);
+     	setVideoGames(ItemsData);
+
 	}
+
+	async function GetInteractiveGames() {
+
+		const db = getFirestore(app);
+
+		const q = query(collection(db, "interactive-games"));
+
+		const querySnapshot = await getDocs(q);
+		const ItemsData = querySnapshot.docs.map((doc) => doc.data());
+     	setInteractiveGames(ItemsData);
+
+	}
+
+	async function handleItemChange() {
+		// Re-fetch the items after deletion
+		await GetVideoGames();
+		await GetInteractiveGames();
+	  }
 
 	async function GetRentals() {
 		const db = getFirestore(app);
@@ -40,9 +60,14 @@ export default function UpdateRentals() {
      	setRentals(RentalsData);
 	}
 
-	useEffect(() => {
-		GetItems()
+	const loadItems = () => {
+		GetVideoGames()
+		GetInteractiveGames()
 		GetRentals()
+	}
+
+	useEffect(() => {
+		loadItems()
 	}, [])
 
 	return(
@@ -58,11 +83,15 @@ export default function UpdateRentals() {
 			{page==1 &&
 				<>
 					<button onClick={toggleAddItem} className="py-2 px-6 font-LogikBold justify-self-end w-max bg-accent text-white hover:bg-white hover:text-accent transition-all rounded-md">Add Item</button>
-					{isAddItem && <AddItem toggleAddItem={toggleAddItem}/>}
+					{isAddItem && <AddItem onAddItem={handleItemChange} toggleAddItem={toggleAddItem}/>}
 
 					<div className="flex flex-col gap-4">
-						{items && items.map((itemsItem, idx) => (
-							<div key={idx}><ItemCard title={itemsItem.title} image={itemsItem.image} amount={itemsItem.amount} price={itemsItem.price} itemId={itemsItem.itemId}/></div>
+						{videoGames && videoGames.map((videoGamesItem, idx) => (
+							<div key={idx}><ItemCard onDelete={handleItemChange} title={videoGamesItem.title} type={videoGamesItem.type} image={videoGamesItem.image} amount={videoGamesItem.amount} price={videoGamesItem.price} itemId={videoGamesItem.itemId}/></div>
+						))}
+
+						{interactiveGames && interactiveGames.map((interactiveGamesItem, idx) => (
+							<div key={idx}><ItemCard onDelete={handleItemChange} title={interactiveGamesItem.title} type={videoGamesItem.type} image={interactiveGamesItem.image} amount={interactiveGamesItem.amount} price={interactiveGamesItem.price} itemId={interactiveGamesItem.itemId}/></div>
 						))}
 					</div>
 				</>
@@ -70,9 +99,9 @@ export default function UpdateRentals() {
 
 			{page==2 &&
 				<>
-					<div className="flex flex-col gap-4">
+					<div className="grid grid-cols-2 gap-12 py-12">
 						{rentals && rentals.map((rentalsItem, idx) => (
-							<div key={idx}><RentalsCard title={rentalsItem.title} verified={rentalsItem.verified} pickupDate={rentalsItem.pickupDate}  rentalId={rentalsItem.rentalId} rentalDate={rentalsItem.rentalDate} amount={rentalsItem.amount} name={rentalsItem.name} price={rentalsItem.price} phone={rentalsItem.phone}/></div>
+							<div key={idx}><RentalsCard loadItems={loadItems} item={rentalsItem.item} verified={rentalsItem.verified} dates={rentalsItem.dates}  itemId={rentalsItem.itemId} name={rentalsItem.name} total={rentalsItem.total} rentalId={rentalsItem.rentalId} phone={rentalsItem.phone}/></div>
 						))}
 					</div>
 				</>

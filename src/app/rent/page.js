@@ -1,13 +1,12 @@
 "use client"
 
 import { app } from "@/utils/firebase"
-import uniqid from 'uniqid';
 import { getFirestore,setDoc, doc, updateDoc, query, collection, querySnapshot, getDocs } from "firebase/firestore";
 import { useState, useEffect } from "react"
 import { ItemRentForm } from "./ItemRentForm";
 
 
-function ItemCard({title, image, price, itemId, amount, type, deposit, delivery, bookings}) {
+function ItemCard({title, image, price, itemId, amount, type, deposit, delivery, bookings, loadItems}) {
 	const [isRentForm,setIsRentForm] = useState(false)
 
 	function rentItem() {
@@ -27,7 +26,7 @@ function ItemCard({title, image, price, itemId, amount, type, deposit, delivery,
 				</div>
 			</div>
 
-			{isRentForm && <ItemRentForm title={title} amount={amount} bookings={bookings} delivery={delivery} deposit={deposit} type={type} image={image} price={price} itemId={itemId} setIsRentForm={rentItem}/>}
+			{isRentForm && <ItemRentForm loadItems={loadItems} title={title} amount={amount} bookings={bookings} delivery={delivery} deposit={deposit} type={type} image={image} price={price} itemId={itemId} setIsRentForm={rentItem}/>}
 
 		</div>
 	)
@@ -62,9 +61,13 @@ export default function Rent() {
 
 	}
 
-	useEffect(() => {
+	const loadItems = () => {
 		GetVideoGames()
 		GetInteractiveGames()
+	}
+
+	useEffect(() => {
+		loadItems()
 	}, [])
 
 	return (
@@ -81,7 +84,7 @@ export default function Rent() {
 			{page==1 &&
 				<div className="grid sm:grid-cols-3 gap-12 w-11/12">
 					{videoGames && videoGames.map((videoGamesItem, idx) => (
-						<div key={idx}><ItemCard title={videoGamesItem.title} bookings={videoGamesItem.bookings} delivery={videoGamesItem.delivery} deposit={videoGamesItem.deposit} amount={videoGamesItem.amount} image={videoGamesItem.image} price={videoGamesItem.price} itemId={videoGamesItem.itemId}/></div>
+						<div key={idx}><ItemCard loadItems={loadItems} title={videoGamesItem.title} type={videoGamesItem.type} bookings={videoGamesItem.bookings} delivery={videoGamesItem.delivery} deposit={videoGamesItem.deposit} amount={videoGamesItem.amount} image={videoGamesItem.image} price={videoGamesItem.price} itemId={videoGamesItem.itemId}/></div>
 					))}
 				</div>
 			}
@@ -89,7 +92,7 @@ export default function Rent() {
 			{page==2 &&
 				<div className="grid sm:grid-cols-3 gap-12 w-11/12">
 					{interactiveGames && interactiveGames.map((interactiveGamesItem, idx) => (
-						<div key={idx}><ItemCard title={interactiveGamesItem.title} bookings={interactiveGamesItem.bookings} delivery={interactiveGamesItem.delivery} deposit={interactiveGamesItem.deposit} amount={interactiveGamesItem.amount} image={interactiveGamesItem.image} price={interactiveGamesItem.price} itemId={interactiveGamesItem.itemId}/></div>
+						<div key={idx}><ItemCard title={interactiveGamesItem.title} type={interactiveGamesItem.type}  bookings={interactiveGamesItem.bookings} delivery={interactiveGamesItem.delivery} deposit={interactiveGamesItem.deposit} amount={interactiveGamesItem.amount} image={interactiveGamesItem.image} price={interactiveGamesItem.price} itemId={interactiveGamesItem.itemId}/></div>
 					))}
 				</div>
 			}

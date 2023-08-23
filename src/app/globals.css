@@ -20,3 +20,8 @@
 	src: url("../assets/font/Logik-WideBold.ttf");
 }
 
+.react-calendar__tile:disabled {
+	background-color: #3f3f3f !important;
+	color: white;
+}
+
