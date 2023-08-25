@@ -98,7 +98,7 @@ export default function UpdateRentals() {
 
 			{page==2 &&
 				<>
-					<div className="grid grid-cols-2 gap-12 py-12">
+					<div className="flex flex-col sm:grid sm:grid-cols-2 gap-12 py-12">
 						{rentals && rentals.map((rentalsItem, idx) => (
 							<div key={idx}><RentalsCard loadItems={loadItems} item={rentalsItem.item} type={rentalsItem.type} verified={rentalsItem.verified} dates={rentalsItem.dates}  itemId={rentalsItem.itemId} name={rentalsItem.name} total={rentalsItem.total} rentalId={rentalsItem.rentalId} phone={rentalsItem.phone}/></div>
 						))}
