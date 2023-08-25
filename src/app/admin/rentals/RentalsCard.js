@@ -1,9 +1,9 @@
 "use client";
 import { app } from "@/utils/firebase";
-import { getFirestore, doc, updateDoc, deleteDoc } from "firebase/firestore";
+import { getFirestore, doc, updateDoc, deleteDoc, getDoc } from "firebase/firestore";
 import { useState } from "react";
 
-export function RentalsCard({item, verified, loadItems, dates, itemId, name, total, rentalId, phone}) {
+export function RentalsCard({item, type, verified, loadItems, dates, itemId, name, total, rentalId, phone}) {
 
 	async function verifyRental() {
 		const db = getFirestore(app);
@@ -18,8 +18,32 @@ export function RentalsCard({item, verified, loadItems, dates, itemId, name, tot
 
 	async function closeRental() {
 		const db = getFirestore(app);
-		await deleteDoc(doc(db, "Rentals", rentalId)).then(() => {
-			loadItems()
+
+		await deleteDoc(doc(db, "Rentals", rentalId)).then(async () => {
+			const itemRef = doc(db, type, itemId);
+  			const itemDoc = await getDoc(itemRef);
+			console.log(itemDoc)
+
+			const existingBookings = itemDoc.data().bookings || [];
+
+			const bookingIndex = existingBookings.findIndex(booking => {
+				return (
+				  booking.from.isEqual(dates[0]) && booking.to.isEqual(dates[1])
+				);
+			  });
+
+			if (bookingIndex !== -1) {
+				// Remove the booking from the array
+				existingBookings.splice(bookingIndex, 1);
+
+				// Update the item's bookings array
+				await updateDoc(itemRef, {
+					bookings: existingBookings
+				}).then(() => {
+					loadItems()
+				});
+			}
+
 		});
 	}
 
@@ -32,7 +56,7 @@ export function RentalsCard({item, verified, loadItems, dates, itemId, name, tot
 				<p className="text-xl font-bold">Item: <span className="text font-thin">{item}</span></p>
 				<p className="text-xl font-bold">Total cost: <span className="text font-thin">{total}Rwf</span></p>
 				<p className="text-xl font-bold">Pickup date: <span className="text font-thin">{dates[0].toDate().toLocaleString()}</span></p>
-				<p className="text-xl font-bold">Return date: <span className="text font-thin">{dates[1].toDate().toLocaleString()}</span></p>
+				<p className="text-xl font-bold">Return date: <span className="text font-thin">{(dates[1] && dates[1].toDate().toLocaleString()) || dates[0].toDate().toLocaleString()}</span></p>
 				<p className="text-xl font-bold">verified: <span className="text font-thin">{JSON.stringify(verified)}</span></p>
 			</div>
 			<div className="flex gap-4">

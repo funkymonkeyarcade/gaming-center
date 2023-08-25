@@ -20,6 +20,8 @@ export default function RootLayout({ children }) {
         <meta property="og:description" content="Explore the ultimate gaming experience at Funky Monkey Arcade in Rwanda." />
         <meta property="og:image" content="https://egamers.rw/logo.svg" />
         <meta property="og:url" content="https://egamers.rw/about" />
+        <link rel="icon" href="/favicon.ico" type="image/x-icon"></link>
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"></link>
       </Head>
       <body className='bg-primary'>
         <Header />

@@ -23,8 +23,6 @@ export async function uploadRental({item, type, itemId, name, phone, dates, tota
 
 	const db = getFirestore(app);
 
-	console.log(type,' : ', itemId)
-
 	const itemDoc = doc(db, type, itemId);
 	const itemSnapshot = await getDoc(itemDoc);
 	const itemData = itemSnapshot.data();
@@ -47,6 +45,7 @@ export async function uploadRental({item, type, itemId, name, phone, dates, tota
 		item,
 		itemId,
 		name,
+		type,
 		phone,
 		dates,
 		total,
@@ -58,7 +57,7 @@ export async function uploadRental({item, type, itemId, name, phone, dates, tota
 
 function isWithinRange(date, range) {
 	const startDate = range[0].toDate(); // Convert Firestore Timestamp to JavaScript Date
-	const endDate = range[1].toDate(); // Convert Firestore Timestamp to JavaScript Date
+	const endDate = (range[1] && range[1].toDate()) || range[0].toDate(); // Convert Firestore Timestamp to JavaScript Date
 	return isWithinInterval(date, { start: startDate, end: endDate });
 }
 

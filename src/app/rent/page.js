@@ -75,9 +75,9 @@ export default function Rent() {
 			<div className="flex flex-col pt-32 pb-8 items-center justify-center w-full bg-[linear-gradient(to_top,rgba(23,15,35,1),rgba(23,15,35,0)_90%),url('/cool-geometric-triangular-figure-neon-laser-light-great-backgrounds.jpg')]">
 				<h1 className="text-white font-LogikBold text-5xl">Rent</h1>
 			</div>
-			<div className="flex w-max m-auto items-center gap-16">
+			<div className="flex flex-col sm:flex-row w-max m-auto items-center gap-4 sm:gap-16">
 				<h1 onClick={() => setPage(1)} className={`${page==1? 'text-accent underline':'text-white'} text-xl font-LogikBold cursor-pointer`}>Video Games</h1>
-				<div className="h-6 w-1 bg-gray-100"></div>
+				<div className="h-[0.2rem] w-16 sm:h-6 sm:w-1 bg-gray-100"></div>
 				<h1 onClick={() => setPage(2)} className={`${page==2? 'text-accent underline':'text-white'} text-xl font-LogikBold cursor-pointer`}>Interactive Games</h1>
 			</div>
 

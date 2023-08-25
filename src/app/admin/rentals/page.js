@@ -15,7 +15,6 @@ export default function UpdateRentals() {
 	const [interactiveGames, setInteractiveGames] = useState()
 	const [rentals, setRentals] = useState()
 
-
 	function toggleAddItem() {
 		setIsAddItem(!isAddItem)
 	}
@@ -48,7 +47,7 @@ export default function UpdateRentals() {
 		// Re-fetch the items after deletion
 		await GetVideoGames();
 		await GetInteractiveGames();
-	  }
+	}
 
 	async function GetRentals() {
 		const db = getFirestore(app);
@@ -91,7 +90,7 @@ export default function UpdateRentals() {
 						))}
 
 						{interactiveGames && interactiveGames.map((interactiveGamesItem, idx) => (
-							<div key={idx}><ItemCard onDelete={handleItemChange} title={interactiveGamesItem.title} type={videoGamesItem.type} image={interactiveGamesItem.image} amount={interactiveGamesItem.amount} price={interactiveGamesItem.price} itemId={interactiveGamesItem.itemId}/></div>
+							<div key={idx}><ItemCard onDelete={handleItemChange} title={interactiveGamesItem.title} type={interactiveGamesItem.type} image={interactiveGamesItem.image} amount={interactiveGamesItem.amount} price={interactiveGamesItem.price} itemId={interactiveGamesItem.itemId}/></div>
 						))}
 					</div>
 				</>
@@ -101,7 +100,7 @@ export default function UpdateRentals() {
 				<>
 					<div className="grid grid-cols-2 gap-12 py-12">
 						{rentals && rentals.map((rentalsItem, idx) => (
-							<div key={idx}><RentalsCard loadItems={loadItems} item={rentalsItem.item} verified={rentalsItem.verified} dates={rentalsItem.dates}  itemId={rentalsItem.itemId} name={rentalsItem.name} total={rentalsItem.total} rentalId={rentalsItem.rentalId} phone={rentalsItem.phone}/></div>
+							<div key={idx}><RentalsCard loadItems={loadItems} item={rentalsItem.item} type={rentalsItem.type} verified={rentalsItem.verified} dates={rentalsItem.dates}  itemId={rentalsItem.itemId} name={rentalsItem.name} total={rentalsItem.total} rentalId={rentalsItem.rentalId} phone={rentalsItem.phone}/></div>
 						))}
 					</div>
 				</>

@@ -21,7 +21,7 @@ function IdCard({id, toggleIdView}) {
 	)
 }
 
-export function ItemRentForm({ image, title, type, price, itemId, amount, deposit, delivery, bookings, setIsRentForm, loadItems }) {
+export function ItemRentForm({ image, title, type, price, itemId, amount, deposit, delivery, bookings, setIsRentForm, loadItems,  }) {
 	const [name, setName] = useState();
 	const [phone, setPhone] = useState();
 	const [IdView, setIdView,] = useState(false);
@@ -62,7 +62,7 @@ export function ItemRentForm({ image, title, type, price, itemId, amount, deposi
 	}
 
 	function handleTotal() {
-		setTotal((price*daysInRange(dates))+ (deposit || 0) + (delivery || 0))
+		setTotal((price*daysInRange(dates)) + parseInt(deposit || 0) + parseInt(delivery || 0))
 	}
 
 	function tileDisabled({ date, view }) {
@@ -151,16 +151,16 @@ export function ItemRentForm({ image, title, type, price, itemId, amount, deposi
 	}
 
 	return (
-		<div className="fixed z-50 top-0 left-0 h-screen w-screen grid place-items-center bg-black bg-opacity-90">
-			<div className="flex flex-col items-center  gap-4 py-8 px-8 w-full sm:w-8/12">
+		<div className="sticky sm:fixed z-50 top-0 left-0 h-max py-16 px-8 sm:h-screen sm:w-screen grid place-items-center bg-black bg-opacity-90">
+			<div className="flex flex-col items-center  gap-4 sm:py-8 sm:px-8 w-full sm:w-8/12">
 				{IdView && <IdCard id={rentalId} toggleIdView={toggleIdView} />}
-				<h1 className="font-LogikBold text-xl">Rental Form</h1>
+				<h1 className="font-LogikBold text-2xl text-accent">Rental Form</h1>
 
-				<div className="flex items-center gap-16">
+				<div className="flex flex-col sm:flex-row items-center gap-16">
 					<div className="flex flex-col gap-8">
-						<div className="flex items-center gap-4">
-							<img src={image} className="w-4/12 m-auto aspect-auto" width={100} height={100} />
-							<div className="grid grid-cols-2 w-full items-center justify-center">
+						<div className="flex flex-col sm:flex-row items-center gap-4">
+							<img src={image} className="w-full sm:w-4/12 m-auto aspect-auto" width={100} height={100} />
+							<div className="flex flex-col sm:grid sm:grid-cols-2 w-full items-center justify-center">
 								<p className="text-white text-lg font-LogikBold">Item name: <span className="font-LogikWide">{title}</span></p>
 								<p className="text-white text-lg font-LogikBold">Item price: <span className="font-LogikWide">{price}Rwf</span></p>
 								{deposit && <p className="text-white text-lg font-LogikBold">Deposit: <span className="font-LogikWide">{deposit}Rwf</span></p>}
