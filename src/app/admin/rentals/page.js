@@ -14,9 +14,14 @@ export default function UpdateRentals() {
 	const [videoGames, setVideoGames] = useState()
 	const [interactiveGames, setInteractiveGames] = useState()
 	const [rentals, setRentals] = useState()
+	const [search, setSearch] = useState('')
 
 	function toggleAddItem() {
 		setIsAddItem(!isAddItem)
+	}
+
+	const handleSearch = (e) => {
+		setSearch(e.target.value)
 	}
 
 	async function GetVideoGames() {
@@ -97,13 +102,20 @@ export default function UpdateRentals() {
 			}
 
 			{page==2 &&
-				<>
+				<div className="flex flex-col py-8">
+					<input onChange={handleSearch} required type="text" name="Search" placeholder="Search ID" className="h-8 w-6/12 m-auto px-2 border-b-2 focus:border-accent outline-none text-white  bg-transparent transition-all" />
 					<div className="flex flex-col sm:grid sm:grid-cols-2 gap-12 py-12">
-						{rentals && rentals.map((rentalsItem, idx) => (
-							<div key={idx}><RentalsCard loadItems={loadItems} item={rentalsItem.item} type={rentalsItem.type} verified={rentalsItem.verified} dates={rentalsItem.dates}  itemId={rentalsItem.itemId} name={rentalsItem.name} total={rentalsItem.total} rentalId={rentalsItem.rentalId} phone={rentalsItem.phone}/></div>
-						))}
+						{rentals &&
+							rentals
+							.filter((rentalsItem) =>
+								search.trim() === '' || rentalsItem.rentalId.toLowerCase().includes(search.toLowerCase())
+							)
+							.map((rentalsItem, idx) => (
+								<div key={idx}><RentalsCard loadItems={loadItems} item={rentalsItem.item} type={rentalsItem.type} verified={rentalsItem.verified} dates={rentalsItem.dates}  itemId={rentalsItem.itemId} name={rentalsItem.name} total={rentalsItem.total} rentalId={rentalsItem.rentalId} phone={rentalsItem.phone}/></div>
+							))
+						}
 					</div>
-				</>
+				</div>
 			}
 		</div>
 	)

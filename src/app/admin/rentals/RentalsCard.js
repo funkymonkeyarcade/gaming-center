@@ -5,6 +5,16 @@ import { useState } from "react";
 
 export function RentalsCard({item, type, verified, loadItems, dates, itemId, name, total, rentalId, phone}) {
 
+	// Calculate the current date
+	const currentDate = new Date();
+
+	// Determine whether the return date has passed
+	const returnDatePassed = dates[1] && dates[1].toDate() < currentDate;
+
+	const backgroundStyle = returnDatePassed
+	? "bg-red-500 bg-opacity-70" // Apply this style if the return date has passed
+	: "bg-black bg-opacity-70";
+
 	async function verifyRental() {
 		const db = getFirestore(app);
 		const itemRef = doc(db, "Rentals", rentalId);
@@ -14,6 +24,11 @@ export function RentalsCard({item, type, verified, loadItems, dates, itemId, nam
 		}).then(() => {
 			loadItems()
 		});
+	}
+
+	function formatDate(date) {
+		const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+		return date.toLocaleDateString('en-GB', options); // Set the locale explicitly to en-GB for dd/mm/yyyy format
 	}
 
 	async function closeRental() {
@@ -48,15 +63,15 @@ export function RentalsCard({item, type, verified, loadItems, dates, itemId, nam
 	}
 
 	return (
-		<div className=" p-4 flex flex-col gap-8 justify-between items-center bg-black bg-opacity-70 rounded-lg shadow-lg">
+		<div className={`p-4 flex flex-col gap-8 justify-between items-center ${backgroundStyle} rounded-lg shadow-lg`}>
 			<div className="flex flex-col">
 				<h2 className="text-xl font-bold">ID: <span className="text font-thin">{rentalId}</span></h2>
 				<p className="text-xl font-bold">Name: <span className="text font-thin">{name}</span></p>
 				<p className="text-xl font-bold">Phone Number: <span className="text font-thin">{phone}</span></p>
 				<p className="text-xl font-bold">Item: <span className="text font-thin">{item}</span></p>
 				<p className="text-xl font-bold">Total cost: <span className="text font-thin">{total}Rwf</span></p>
-				<p className="text-xl font-bold">Pickup date: <span className="text font-thin">{dates[0].toDate().toLocaleString()}</span></p>
-				<p className="text-xl font-bold">Return date: <span className="text font-thin">{(dates[1] && dates[1].toDate().toLocaleString()) || dates[0].toDate().toLocaleString()}</span></p>
+				<p className="text-xl font-bold">Pickup date: <span className="text font-thin">{formatDate(dates[0].toDate())}</span></p>
+				<p className="text-xl font-bold">Return date: <span className="text font-thin">{(dates[1] && formatDate(dates[1].toDate())) || formatDate(dates[0].toDate())}</span></p>
 				<p className="text-xl font-bold">verified: <span className="text font-thin">{JSON.stringify(verified)}</span></p>
 			</div>
 			<div className="flex gap-4">

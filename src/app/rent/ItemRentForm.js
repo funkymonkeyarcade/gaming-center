@@ -2,19 +2,86 @@
 import { useState, useEffect } from "react";
 import { isWithinRanges, uploadRental } from "./helpers";
 
+import { callAddFont } from "./Ticketing-normal";
+
+import { useQRCode } from 'next-qrcode';
+
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 
-function IdCard({id, toggleIdView}) {
+function ReceiptCard({id, item, name, phone, dates, total, toggleIdView}) {
+	const { Image } = useQRCode();
+
+	const downloadReceipt = async () => {
+		const divElement = document.getElementById("receipt");
+		const divWidth = divElement.offsetWidth;
+		const divHeight = divElement.offsetHeight+100;
+
+		const receipt = await callAddFont(divWidth, divHeight);
+
+		receipt.html(document.querySelector('#receipt')).then(() => {
+			receipt.setFont("Ticketing");
+			receipt.save(`Funky Monkey_${id}`)
+		})
+	}
+
 	return(
-		<div className="absolute z-50 top-0 left-0 h-screen w-screen grid place-items-center bg-black bg-opacity-90">
-			<div className="flex flex-col gap-16">
-				<h1 className="text-green-700 text-xl font-LogikBold">Item booked successfully</h1>
-				<div className="font-LogikBold flex gap-8">
-					<h1 className="text-2xl text-white">Rental ID: </h1>
-					<h2 className="text-2xl text-accent">{id}</h2>
+		<div className="fixed sm:absolute z-50 top-0 left-0 h-max sm:h-screen py-8 sm:py-0 sm:px-0 sm:w-screen grid place-items-center bg-black bg-opacity-90 font-Ticketing">
+			<div className="flex flex-col gap-4 text-black w-full sm:w-auto">
+
+				<h2 className="text-xl text-red-600 font-LogikBold">Please download this receipt or remember the Rental ID to be used at Pickup</h2>
+
+				<div id="receipt" className="flex flex-col sm:grid sm:grid-cols-2 gap-4 bg-white px-2 sm:px-12 py-8 rounded-lg items-center">
+					<div>
+						<div className="flex items-center font-bold">
+							<h1 className="text-4xl">Rental ID: </h1>
+							<h2 className="text-4xl">{id}</h2>
+						</div>
+						<div className="flex gap-2">
+							<h1 className="text-2xl font-bold">Item:</h1>
+							<h2 className="text-2xl">{item}</h2>
+						</div>
+						<div className="flex gap-2">
+							<h1 className="text-2xl font-bold">Name:</h1>
+							<h2 className="text-2xl">{name}</h2>
+						</div>
+						<div className="flex gap-2">
+							<h1 className="text-2xl font-bold">Phone:</h1>
+							<h2 className="text-2xl">{phone}</h2>
+						</div>
+						<div className="flex gap-2">
+							<h1 className="text-2xl font-bold">Rental Date:</h1>
+							<h2 className="text-2xl">{dates[0].toLocaleString()}</h2>
+						</div>
+						<div className="flex gap-2">
+							<h1 className="text-2xl font-bold">Return Date:</h1>
+							<h2 className="text-2xl"> {dates[1] ? dates[1].toLocaleString() : (dates[0] ? dates[0].toLocaleString() : '')}</h2>
+						</div>
+						<div className="flex flex-col items-center">
+							<h1 className="text-2xl font-bold">Total:</h1>
+							<h2 className="text-4xl">{total}</h2>
+						</div>
+					</div>
+					<div className="h-full w-full grid place-items-center">
+						<Image
+					      text={id}
+					      options={{
+					        type: 'image/jpeg',
+					        quality: 0.3,
+					        errorCorrectionLevel: 'M',
+					        margin: 3,
+					        scale: 4,
+					        width: window.innerWidth <= 768 ? 200 : 300,
+					        color: {
+					          dark: '#000000',
+					          light: '#FFFFFF',
+					        },
+					      }}
+					    />
+					</div>
+
 				</div>
-				<h2 className="text-red-800 font-LogikBold">Please remember to copy this ID <br />because it will be used on checkout</h2>
+				<button onClick={downloadReceipt} className='py-2 px-6 font-LogikBold hover:bg-opacity-50 bg-accent text-white transition-all rounded-md'>Download Receipt</button>
 				<button onClick={toggleIdView} className='py-2 px-6 font-LogikBold hover:bg-gray-600 bg-gray-800 text-white transition-all rounded-md'>Done</button>
 			</div>
 		</div>
@@ -41,7 +108,6 @@ export function ItemRentForm({ image, title, type, price, itemId, amount, deposi
 	}, [dates])
 
 	useEffect(() => {
-		console.log(dates," : ", ageVerification)
 		if (name && phone && dates && ageVerification) {
 			setActive(true)
 		} else {
@@ -151,9 +217,9 @@ export function ItemRentForm({ image, title, type, price, itemId, amount, deposi
 	}
 
 	return (
-		<div className="sticky sm:fixed z-50 top-0 left-0 h-max py-16 px-8 sm:h-screen sm:w-screen grid place-items-center bg-black bg-opacity-90">
-			<div className="flex flex-col items-center  gap-4 sm:py-8 sm:px-8 w-full sm:w-8/12">
-				{IdView && <IdCard id={rentalId} toggleIdView={toggleIdView} />}
+		<div className="sticky sm:fixed z-50 top-0 left-0 h-max py-16 sm:py-0 px-8 sm:h-screen sm:w-screen grid place-items-center bg-black bg-opacity-90">
+			<div className="flex flex-col items-center  gap-4 sm:py-4 sm:px-8 w-full sm:w-8/12">
+				{IdView && <ReceiptCard id={rentalId} item={title} name={name} total={total} phone={phone} dates={dates} toggleIdView={toggleIdView} />}
 				<h1 className="font-LogikBold text-2xl text-accent">Rental Form</h1>
 
 				<div className="flex flex-col sm:flex-row items-center gap-16">

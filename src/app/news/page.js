@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 
 function NewsCard({title, image, timestamp}) {
-	console.log(timestamp)
 	return(
 		<div className='flex flex-col w-full shadow-lg'>
 	      <div className='bg-black h-64 rounded-t-xl bg-center bg-[size:120%] hover:bg-[size:140%] transition-all'  style={{backgroundImage: `url(${image})`}}/>

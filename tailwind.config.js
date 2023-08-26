@@ -15,6 +15,7 @@ module.exports = {
         'LogikBlack': ['Logik-WideBlack'],
         'LogikBold': ['Logik-WideBold'],
         'LogikWide': ['Logik-Wide'],
+        'Ticketing': ['Ticketing'],
       }
     },
   },

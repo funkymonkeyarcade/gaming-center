@@ -20,6 +20,11 @@
 	src: url("../assets/font/Logik-WideBold.ttf");
 }
 
+@font-face {
+	font-family: "Ticketing";
+	src: url("../assets/font/Ticketing.otf");
+}
+
 .react-calendar__tile:disabled {
 	background-color: #3f3f3f !important;
 	color: white;
