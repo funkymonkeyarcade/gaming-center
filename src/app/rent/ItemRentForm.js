@@ -175,6 +175,8 @@ export function ItemRentForm({ image, title, type, price, itemId, amount, deposi
 	}
 
 	const onPublish = async () => {
+		setActive(false)
+
 		const rental = {
 			item: title,
 			type,
@@ -206,6 +208,7 @@ export function ItemRentForm({ image, title, type, price, itemId, amount, deposi
 			setIdView(true);
 			showSuccess()
 			loadItems()
+			setActive(true)
 		}).catch(error => {
 			showError(error.message);
 		});

@@ -32,6 +32,7 @@ function Form() {
 	const [email, setEmail] = useState()
 	const [phone, setPhone] = useState()
 	const [message, setMessage] = useState()
+	const [active, setActive] = useState(true)
 	const [error, setError] = useState()
 	const [success, setSuccess] = useState()
 
@@ -66,8 +67,10 @@ function Form() {
 	  }
 
 	function sendMail(e) {
-		e.preventDefault()
 		setError('')
+		setActive(false)
+
+		e.preventDefault()
 
 		if (!validateForm()) {
 			return
@@ -79,8 +82,9 @@ function Form() {
 			setPhone('')
 			setMessage('')
 			showSuccess()
+			setActive(true)
 		}).catch(error => {
-			setError(error)
+			setError(error.message)
 		})
 	}
 
@@ -109,7 +113,7 @@ function Form() {
 					<input onChange={handlePhone} value={phone} className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white bg-transparent transition-all" type="phone" name="user_phone" placeholder="Phone number"/>
 					<input onChange={handleMessage} value={message} className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white bg-transparent transition-all" type="text" name="message" placeholder="Video games/Pool games"/>
 				</div>
-				<input type="submit" value="Send" className='py-2 px-6 font-LogikBold col-span-2 justify-self-end w-max font-bold bg-accent text-white hover:bg-white hover:text-accent transition-all rounded-md' />
+				<input type="submit" value="Send" disabled={!active} className='py-2 px-6 font-LogikBold col-span-2 justify-self-end w-max font-bold bg-accent text-white hover:bg-white hover:text-accent transition-all rounded-md' />
 			</form>
 
 			{success &&
