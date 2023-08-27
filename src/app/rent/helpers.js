@@ -1,7 +1,8 @@
 import { app } from "@/utils/firebase";
 import { isWithinInterval } from "date-fns";
-import { getFirestore,setDoc, doc, updateDoc, query, collection, querySnapshot, getDocs, getDoc } from "firebase/firestore";
+import { getFirestore,setDoc, doc, updateDoc, getDoc } from "firebase/firestore";
 import uniqid from 'uniqid';
+import emailjs from "@emailjs/browser"
 
 
 function datesOverlap(start1, end1, start2, end2) {
@@ -51,7 +52,18 @@ export async function uploadRental({item, type, itemId, name, phone, dates, tota
 		total,
 		verified: false,
 		rentalId
-	}).then(() => rentalId)
+	}).then(() => {
+		let template = {
+			user_name: name,
+			message: `New rental by ${name} with ID: ${rentalId}`
+		}
+
+		emailjs.send(process.env.NEXT_PUBLIC_SERVICE_ID, process.env.NEXT_PUBLIC_RENTAL_TEMPLATE_ID, template, process.env.NEXT_PUBLIC_PUBLIC_KEY).catch(err => {
+			throw(err)
+		})
+
+		return rentalId
+	})
 }
 
 
