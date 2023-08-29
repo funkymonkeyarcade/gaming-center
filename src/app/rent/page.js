@@ -72,8 +72,9 @@ export default function Rent() {
 
 	return (
 		<div className="flex flex-col gap-16 items-center bg-primary pb-24">
-			<div className="flex flex-col pt-32 pb-8 items-center justify-center w-full bg-[linear-gradient(to_top,rgba(23,15,35,1),rgba(23,15,35,0)_90%),url('/cool-geometric-triangular-figure-neon-laser-light-great-backgrounds.jpg')]">
+			<div className="flex flex-col pt-32 pb-8 items-center justify-center w-full bg-cover bg-[linear-gradient(to_top,rgba(4,9,38,1)_40%,rgba(4,9,38,0)_100%),url('https://firebasestorage.googleapis.com/v0/b/gaming-906ed.appspot.com/o/9260185_4127298.jpg?alt=media&token=3d9efb75-a9c3-4171-b969-3040712c87ac')]">
 				<h1 className="text-white font-LogikBold text-5xl">Rent</h1>
+				<h2 className="text-lg font-LogikWide text-accent" >{`(Terms and Conditions apply)`}</h2>
 			</div>
 			<div className="flex flex-col sm:flex-row w-max m-auto items-center gap-4 sm:gap-16">
 				<h1 onClick={() => setPage(1)} className={`${page==1? 'text-accent underline':'text-white'} text-xl font-LogikBold cursor-pointer`}>Video Games</h1>

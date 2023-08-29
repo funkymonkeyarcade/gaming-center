@@ -27,7 +27,7 @@ function TournamentText() {
 export default function About() {
 	return(
 		<div className="flex flex-col items-center bg-primary">
-			<div className="flex flex-col items-center justify-center pt-40 px-8 sm:px-0 w-full bg-[size:100%] bg-[linear-gradient(to_top,rgba(23,15,35,1),rgba(23,15,35,0)_90%),url('https://firebasestorage.googleapis.com/v0/b/gaming-906ed.appspot.com/o/cool-geometric-triangular-figure-neon-laser-light-great-backgrounds.jpg?alt=media&token=754cb71a-ab23-487f-9648-6dc908b016c6')]">
+			<div className="flex flex-col items-center justify-center pt-40 px-8 sm:px-0 w-full bg-[size:100%] bg-[linear-gradient(to_top,rgba(4,9,38,1),rgba(4,9,38,0)_90%),url('https://firebasestorage.googleapis.com/v0/b/gaming-906ed.appspot.com/o/cool-geometric-triangular-figure-neon-laser-light-great-backgrounds.jpg?alt=media&token=754cb71a-ab23-487f-9648-6dc908b016c6')]">
 				<h1 className="text-white font-LogikBold text-5xl pb-24">PROMOTING ESPORTS IN RWANDA</h1>
 			</div>
 			<AboutText />

@@ -94,7 +94,7 @@ export function AddItem({ toggleAddItem, onAddItem }) {
 
 	return (
 		<div className="fixed top-0 left-0 h-screen w-screen grid place-items-center bg-black bg-opacity-80">
-			<div className="flex flex-col gap-8 py-8 px-8 w-4/12">
+			<div className="flex flex-col gap-8 py-8 px-8 w-full sm:w-4/12">
 				<h1 className="font-LogikBold text-2xl">Add Item</h1>
 				<input onChange={handleImage} type="file" placeholder="Enter image" multiple accept="image/*,audio/*,video/*" className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white  bg-transparent transition-all"></input>
 				<input onChange={handleTitle} value={title} type="text" name="title" placeholder="Enter item title" className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white  bg-transparent transition-all" />

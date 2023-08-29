@@ -9,7 +9,7 @@ module.exports = {
     extend: {
       colors: {
         'accent': '#DA1C5C',
-        'primary': '#170F23'
+        'primary': '#040926'
       },
       fontFamily: {
         'LogikBlack': ['Logik-WideBlack'],

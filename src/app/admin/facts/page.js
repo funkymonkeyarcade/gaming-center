@@ -49,7 +49,7 @@ export default function UpdateFacts() {
 
 	return(
 		<div className="flex flex-col gap-8 py-8 px-8">
-			<h1 className="font-LogikBold text-4xl">NEWS</h1>
+			<h1 className="font-LogikBold text-4xl">FACTS</h1>
 			<input onChange={handleImage} type="file" placeholder="Enter image" multiple accept="image/*,audio/*,video/*" className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white  bg-transparent transition-all"></input>
 			<input onChange={handleNumber} type="text" name="Number" placeholder="Enter Number" className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white  bg-transparent transition-all"/>
 			<textarea onChange={handleDescription} placeholder="Write Description" className="h-8 px-2 border-b-2 focus:border-accent outline-none text-white  bg-transparent transition-all"/>

@@ -42,7 +42,7 @@ export default function Numbers() {
 	}, [])
 
 	return (
-	  <section className='flex flex-col items-center gap-16 px-8 sm:px-16 pt-16 pb-8 w-full '>
+	  <section className='flex flex-col items-center gap-16 px-8 sm:px-16 pt-16 w-full '>
 		<h1 className='text-white font-LogikBold text-5xl w-full pb-4'>ESPORTS BY THE NUMBERS</h1>
 		<Carousel showStatus={false} infiniteLoop={true} showArrows={false} className="w-full">
 			{facts && facts.map((factsItem, idx) => (

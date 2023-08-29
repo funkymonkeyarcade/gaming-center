@@ -12,7 +12,7 @@ export function ItemCard({ onDelete, title, type, image, price, itemId }) {
 	}
 
 	return (
-		<div className="w-full p-4 grid grid-cols-[1fr_4fr_1fr] gap-8 items-center bg-black bg-opacity-70 rounded-lg shadow-lg">
+		<div className="w-full p-4 flex-flex-col sm:grid sm:grid-cols-[1fr_4fr_1fr] gap-16 sm:gap-8 items-center bg-black bg-opacity-70 rounded-lg shadow-lg">
 			<img src={image} className="w-full" width={100} height={100} alt={title} />
 			<div className="flex flex-col">
 				<h2 className="text-2xl font-LogikBold">{title}</h2>

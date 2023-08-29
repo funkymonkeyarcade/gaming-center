@@ -84,7 +84,7 @@ export default function Events() {
 
 	return(
 		<div className="flex flex-col gap-8 items-center bg-primary">
-			<div className="flex flex-col items-center justify-center pt-40 pb-16 w-full bg-[linear-gradient(to_top,rgba(23,15,35,1),rgba(23,15,35,0)_90%),url('/futuristic-colorful-glowing-abstract-neon-lights-background.jpg')]">
+			<div className="flex flex-col items-center justify-center pt-40 pb-16 w-full bg-cover bg-[linear-gradient(to_top,rgba(4,9,38,1)_40%,rgba(4,9,38,0)_100%),url('https://firebasestorage.googleapis.com/v0/b/gaming-906ed.appspot.com/o/91657.jpg?alt=media&token=a8e6ee53-8e6b-42aa-aca2-e11e33413df4')]">
 				<h1 className="text-white font-LogikBold text-5xl">Events</h1>
 			</div>
 

@@ -42,7 +42,7 @@ export default function News() {
 
 	return(
 		<div className="flex flex-col gap-8 items-center bg-primary pb-24">
-			<div className="flex flex-col pt-32 pb-24 items-center justify-center w-full bg-[linear-gradient(to_top,rgba(23,15,35,1),rgba(23,15,35,0)_90%),url('/cool-geometric-triangular-figure-neon-laser-light-great-backgrounds.jpg')]">
+			<div className="flex flex-col pt-32 pb-24 items-center justify-center bg-cover w-full bg-[linear-gradient(to_top,rgba(4,9,38,1)_40%,rgba(4,9,38,0)_100%),url('https://firebasestorage.googleapis.com/v0/b/gaming-906ed.appspot.com/o/10987662_4561977.jpg?alt=media&token=a757fb2a-fc76-45a3-a82e-b2ce44b00ccd')]">
 				<h1 className="text-white font-LogikBold text-5xl">News</h1>
 			</div>
 
