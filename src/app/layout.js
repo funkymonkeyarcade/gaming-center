@@ -29,8 +29,8 @@ export default function RootLayout({ children }) {
         <meta name="twitter:description" content="Welcome to eGamers.rw! Explore the ultimate gaming experience at Funky Monkey Arcade, located in Mundi Center Rwandex, Rwanda. Enjoy a wide range of arcade games and entertainment for all ages. Join us for a fun-filled adventure in the heart of Rwanda's gaming scene." />
         <meta name="twitter:image" content="https://firebasestorage.googleapis.com/v0/b/gaming-906ed.appspot.com/o/image.jpg?alt=media&token=04f8cca6-e7bb-4e30-8249-f4d89140ccdf" />
 
-        <link rel="icon" href="/favicon.ico" type="image/x-icon"></link>
-        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"></link>
+        <link rel="icon" href="https://www.egamers.rw/favicon.ico" type="image/x-icon"></link>
+        <link rel="shortcut icon" href="https://www.egamers.rw/favicon.ico" type="image/x-icon"></link>
       </Head>
       <body className='bg-primary'>
         <Header />
