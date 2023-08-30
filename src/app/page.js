@@ -11,7 +11,7 @@ function Hero() {
         <Link href='/events'><button className='p-4 w-max font-bold bg-accent text-white hover:bg-white hover:text-accent transition-all rounded-md'>UPCOMING EVENTS</button></Link>
       </div>
       <div className='absolute w-full sm:h-full overflow-hidden'>
-        <div className='absolute top-0 h-[200%] w-full bg-gradient-to-t from-primary via-primary to-transparent '></div>
+        <div className='absolute top-0 h-[200%] w-full bg-gradient-to-t from-primary via-primary to-transparent'></div>
         <video autoPlay loop>
           <source src='https://firebasestorage.googleapis.com/v0/b/gaming-906ed.appspot.com/o/InShot_20230814_150812336.mp4?alt=media&token=ec03c011-2de5-40b6-820f-5427e408a59d' />
         </video>

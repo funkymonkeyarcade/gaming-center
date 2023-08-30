@@ -88,7 +88,7 @@ export function NewsList() {
 	}, [])
 
 	return (
-	  <section className='flex flex-col gap-24 px-8 sm:px-16 pt-8 w-full'>
+	  <section className='flex flex-col gap-24 px-8 sm:px-16 lg:pt-32 pt-8 w-full'>
 		<h1 className='text-white font-LogikBold text-5xl w-full pb-8 border-accent border-b-2'>News</h1>
 		<Slider className="w-full" {...settings}>
 			{news && news.map((newsItem, idx) => (
