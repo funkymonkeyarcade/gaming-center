@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
       <Head>
         <meta property="og:title" content="eGamers.rw - Funky Monkey Arcade" />
         <meta property="og:description" content="Explore the ultimate gaming experience at Funky Monkey Arcade in Rwanda." />
-        <meta property="og:image" content="https://egamers.rw/logo.svg" />
+        <meta property="og:image" content="https://firebasestorage.googleapis.com/v0/b/gaming-906ed.appspot.com/o/image.jpg?alt=media&token=04f8cca6-e7bb-4e30-8249-f4d89140ccdf" />
         <meta property="og:url" content="https://egamers.rw/about" />
 
         <link rel="icon" href="/favicon.ico" type="image/x-icon"></link>
