@@ -7,7 +7,7 @@ function Hero() {
   return(
     <section className='relative sm:h-full grid grid-cols-2 text-white px-4 pt-56 pb-56 sm:px-16 sm:pt-56 sm:pb-32 w-full'>
       <div className='flex flex-col h-full justify-center gap-4 z-10'>
-        <h1 className='text-4xl font-black font-LogikBold'>FIRST E-SPORT CENTER <br/>IN <span className='text-accent'>R</span>WANDA</h1>
+        <h1 className='text-4xl font-black font-LogikBold'>FIRST E-SPORTS CENTER <br/>IN <span className='text-accent'>R</span>WANDA</h1>
         <Link href='/events'><button className='p-4 w-max font-bold bg-accent text-white hover:bg-white hover:text-accent transition-all rounded-md'>UPCOMING EVENTS</button></Link>
       </div>
       <div className='absolute w-full sm:h-full overflow-hidden'>

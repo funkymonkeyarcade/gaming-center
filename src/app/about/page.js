@@ -19,7 +19,7 @@ function TournamentText() {
 				<h2 className="text-lg font-LogikWide"><b>Elevate Your Game.</b></h2>
 				<p className="text-2xl">Funky Monkey Arcade&rsquo;s Tournament Arena isn&rsquo;t just a platform – it&rsquo;s a launching pad for esports enthusiasts to ascend to new heights. Sharpen your skills, forge connections, and etch your name into the annals of esports history.</p>
 			</div>
-			<img className="w-full h-full" src="https://firebasestorage.googleapis.com/v0/b/gaming-906ed.appspot.com/o/michal-ilenda-UzwsrV3bFdU-unsplash.png?alt=media&token=a2f93deb-6f0a-46a7-bdc4-0f6e10327d55"/>
+			<img className="w-full h-full " src="https://firebasestorage.googleapis.com/v0/b/gaming-906ed.appspot.com/o/michal-ilenda-UzwsrV3bFdU-unsplash.png?alt=media&token=a2f93deb-6f0a-46a7-bdc4-0f6e10327d55"/>
 		</section>
 	)
 }
