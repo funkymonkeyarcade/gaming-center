@@ -6,6 +6,7 @@ import instagram from "../assets/icons/icons8-instagram.svg"
 import linkedin from "../assets/icons/icons8-linkedin.svg"
 import twitter from "../assets/icons/icons8-twitter.svg"
 import youtube from "../assets/icons/icons8-youtube.svg"
+import flickr from "../assets/icons/icons8-flickr.svg"
 
 export function Footer() {
 	return(
@@ -18,6 +19,7 @@ export function Footer() {
 			<a href="https://www.youtube.com/@FunkymonkeyArcade" target="_blank"><li className="w-10 h-10 p-2 rounded-full border-[0.1rem] border-white"><Image src={youtube} width={'50%'}></Image></li></a>
 			{/* <a href="" target="_blank"><li className="w-10 h-10 p-2 rounded-full border-[0.1rem] border-white"><Image src={linkedin} width={'50%'}></Image></li></a>			 */}
 			<a href="https://instagram.com/funkymonkeyarcade?utm_source=qr&igshid=MzNlNGNkZWQ4Mg%3D%3D" target="_blank"><li className="w-10 h-10 p-2 rounded-full border-[0.1rem] border-white"><Image src={instagram} width={'50%'}></Image></li></a>
+			<a href="https://www.flickr.com/photos/1_st_egamers/" target="_blank"><li className="w-10 h-10 p-2 rounded-full border-[0.1rem] border-white"><Image src={flickr} width={'50%'}></Image></li></a>
 		  </ul>
 		</div>
 		<div>
