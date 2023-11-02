@@ -23,11 +23,11 @@ export function Header() {
 			<Menu toggleMenu={toggleMenu} isMenu={isMenu}/>
 			<img className="h-12 sm:hidden" src="/menu.svg" alt="menu" onClick={toggleMenu}/>
 			<ul className='hidden sm:flex gap-8 font-LogikBold text-sm'>
-				<Link href={"/events"}><li className={`p-2 ${usePathname() == '/events'? 'text-accent':'text-white'} hover:border-b-2 hover:border-accent cursor-pointer transition-all`}>EVENTS</li></Link>
-				<Link href={"/news"}><li className={`p-2 ${usePathname() == '/news'? 'text-accent':'text-white'} hover:border-b-2 hover:border-accent cursor-pointer transition-all`}>NEWS</li></Link>
-				<Link href={"/about"}><li className={`p-2 ${usePathname() == '/about'? 'text-accent':'text-white'} hover:border-b-2 hover:border-accent cursor-pointer transition-all`}>ABOUT</li></Link>
-				<Link href={"/rent"}><li className={`p-2 ${usePathname() == '/rent'? 'text-accent':'text-white'} hover:border-b-2 hover:border-accent cursor-pointer transition-all`}>RENTALS</li></Link>
-				<Link href={"/contact"}><li className={`p-2 ${usePathname() == '/contact'? 'text-accent':'text-white'} hover:border-b-2 hover:border-accent cursor-pointer transition-all`}>REGISTER</li></Link>
+				<Link href={"/e-sport-events"}><li className={`p-2 ${usePathname() == '/events'? 'text-accent':'text-white'} hover:border-b-2 hover:border-accent cursor-pointer transition-all`}>EVENTS</li></Link>
+				<Link href={"/e-sport-news"}><li className={`p-2 ${usePathname() == '/news'? 'text-accent':'text-white'} hover:border-b-2 hover:border-accent cursor-pointer transition-all`}>NEWS</li></Link>
+				<Link href={"/e-sport-about"}><li className={`p-2 ${usePathname() == '/about'? 'text-accent':'text-white'} hover:border-b-2 hover:border-accent cursor-pointer transition-all`}>ABOUT</li></Link>
+				<Link href={"/e-sport-rent"}><li className={`p-2 ${usePathname() == '/rent'? 'text-accent':'text-white'} hover:border-b-2 hover:border-accent cursor-pointer transition-all`}>RENTALS</li></Link>
+				<Link href={"/e-sport-contact"}><li className={`p-2 ${usePathname() == '/contact'? 'text-accent':'text-white'} hover:border-b-2 hover:border-accent cursor-pointer transition-all`}>REGISTER</li></Link>
 			</ul>
 		</div>
 	  </header>
