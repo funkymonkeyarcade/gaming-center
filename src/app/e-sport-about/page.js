@@ -1,5 +1,5 @@
 import { Calendar } from "../../components/Calendar.jsx"
-import Newsletter from "../../components/Newsletter"
+import Newsletter from "../../components/Newsletter.jsx"
 
 function AboutText() {
 	return (
