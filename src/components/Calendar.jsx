@@ -11,9 +11,11 @@ function formatDate(dateString) {
 }
 
 function CalendarCard({title, image, from, to}) {
+
+	console.log(image)
 	return(
-	  <div className='flex flex-col gap-4 items-center justify-center w-64 px-2 py-2 h-full bg-black bg-cover bg-opacity-20 rounded-lg' style={{backgroundImage: `linear-gradient(rgba(218, 28, 92, 0.9), rgba(218, 28, 92, 0.9)), url(${image})`}}>
-		<div className={`w-full h-40 bg-cover`} style={{backgroundImage: `url(${image})`}} ></div>
+	  <div className='flex flex-col gap-4 items-center w-64 px-2 py-2 h-full bg-accent bg-cover bg-opacity-80 rounded-lg'>
+		<img src={image} alt={title} className="m-0 p-0 aspect-square" />
 		<p className='font-LogikBold text-gray-800 text-lg'>{`${formatDate(from)}`}</p>
 		<h2 className='text-white font-LogikBold text-2xl text-center'>{title}</h2>
 	  </div>
@@ -33,6 +35,7 @@ function CalendarCard({title, image, from, to}) {
 
 		const querySnapshot = await getDocs(q);
 		const eventData = querySnapshot.docs.map((doc) => doc.data());
+
 		eventData.sort((a, b) => new Date(a.from) - new Date(b.from))
      	setEvents(eventData);
 

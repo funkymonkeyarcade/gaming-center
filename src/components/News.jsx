@@ -12,9 +12,9 @@ import Link from "next/link";
 
 function NewsCard({image, title}) {
 	return (
-		<Link href={`/news/${title}`}>
-		  <div className='flex flex-col gap-2 w-72'>
-			<div className={`bg-black h-52 rounded-lg w-full bg-center bg-[size:120%] hover:bg-[size:140%] transition-all`}  alt="" style={{backgroundImage: `url(${image})`}}/>
+		<Link href={`/e-sport-news/${title}`}>
+		  <div className='flex flex-col gap-4 w-72'>
+			<img src={image} alt={title} className="bg-black h-52 rounded-lg w-full hover:scale-110 transition-all" />
 			<h2 className='text-white font-LogikBold'>{title}</h2>
 		  </div>
 		</Link>
@@ -80,7 +80,6 @@ export function NewsList() {
 		const querySnapshot = await getDocs(q);
 		const newsData = querySnapshot.docs.map((doc) => doc.data());
      	setNews(newsData);
-
 	}
 
 	useEffect(() => {

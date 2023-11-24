@@ -14,7 +14,7 @@ function NewsCard({title, image, timestamp}) {
 				<p className="text-gray-600 font-LogikBold">{getDate(timestamp)}</p>
 				<h2 className='text-white font-LogikBold'>{title}</h2>
 			</div>
-			<Link href={`/news/${title}`}><button className="flex justify-start bg-none text-accent font-LogikWide">READ MORE</button></Link>
+			<Link href={`/e-sport-news/${title}`}><button className="flex justify-start bg-none text-accent font-LogikWide">READ MORE</button></Link>
 		  </div>
 	    </div>
 	)
