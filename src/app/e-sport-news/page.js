@@ -7,9 +7,9 @@ import { useState, useEffect } from "react";
 
 function NewsCard({title, image, timestamp}) {
 	return(
-		<div className='flex flex-col w-full shadow-lg'>
-	      <div className='bg-black h-64 rounded-t-xl bg-center bg-[size:120%] hover:bg-[size:140%] transition-all'  style={{backgroundImage: `url(${image})`}}/>
-		  <div className="bg-gray-800 flex flex-col gap-6 px-8 py-4">
+		<div className='flex flex-col w-full shadow-lg h-full'>
+		  <img src={image} alt={title} className="bg-black w-full aspect-square rounded-t-lg transition-all" />
+		  <div className="bg-gray-800 flex flex-col gap-6 px-8 py-4 h-full">
 			<div className="flex flex-col gap-2">
 				<p className="text-gray-600 font-LogikBold">{getDate(timestamp)}</p>
 				<h2 className='text-white font-LogikBold'>{title}</h2>
@@ -46,7 +46,7 @@ export default function News() {
 				<h1 className="text-white font-LogikBold text-5xl">News</h1>
 			</div>
 
-			<div className="grid sm:grid-cols-2 gap-8 w-11/12">
+			<div className="grid sm:grid-cols-3 gap-12 w-11/12">
 				{news && news.map((newsItem, idx) => (
 					<div key={idx}><NewsCard title={newsItem.title} image={newsItem.image} timestamp={newsItem.timestamp} /></div>
 				))}
