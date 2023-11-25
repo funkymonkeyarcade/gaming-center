@@ -52,7 +52,7 @@ export default function Article({params}) {
 	return(
 
 		<div className="flex flex-col gap-16">
-			<div className="flex flex-col gap-16 px-8 sm:px-16 py-24 w-full text-white">
+			<div className="flex flex-col gap-16 px-8 sm:px-16 py-24 w-full sm:w-10/12 m-auto text-white">
 				{news &&
 					<div className="flex flex-col gap-4">
 						<div className={`bg-black h-96 rounded-lg w-full bg-center bg-cover transition-all`}  alt="" style={{backgroundImage: `url(${news[0].image})`}}/>
