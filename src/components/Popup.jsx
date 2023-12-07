@@ -38,7 +38,7 @@ export default function Popup() {
         <div className='relative flex flex-col sm:grid sm:grid-cols-[2fr_3fr] sm:gap-4 w-11/12 sm:w-8/12 sm:h-[80vh] sm:h-[60vh] bg-black rounded-lg shadow-lg overflow-hidden'>
             <div onClick={togglePopup} className='absolute text-accent text-xl font-LogikBold top-2 right-2 cursor-pointer'>x</div>
 
-            <img src={popupData?.image || ''} alt="" className='hidden sm:block bg-primary w-40 sm:w-full sm:h-full' />
+            <img src={popupData?.image || ''} alt="" className='hidden sm:block bg-primary sm:w-full sm:h-full' />
 
             <div className='flex flex-col sm:h-[60vh] justify-center gap-4 py-12 px-6'>
                 <h1 className='text-white text-xl font-LogikBold'>{popupData?.title || 'Default Title'}</h1>
