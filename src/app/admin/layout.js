@@ -49,6 +49,7 @@ export default function AdminLayout({ children }) {
 				<Link href="/admin/facts"><li className="border-b-2 border-gray-500 py-2 hover:text-accent hover:border-accent">Facts</li></Link>
 				<Link href="/admin/events"><li className="border-b-2 border-gray-500 py-2 hover:text-accent hover:border-accent">Events</li></Link>
 				<Link href="/admin/rentals"><li className="border-b-2 border-gray-500 py-2 hover:text-accent hover:border-accent">Rentals</li></Link>
+				<Link href="/admin/popup"><li className="border-b-2 border-gray-500 py-2 hover:text-accent hover:border-accent">Popup</li></Link>
 			</ul>
 			<div>
 				{children}

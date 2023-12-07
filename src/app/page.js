@@ -2,6 +2,7 @@ import { NewsList } from '@/components/News.jsx'
 import { Calendar } from '../components/Calendar.jsx'
 import Numbers from '@/components/Numbers.jsx'
 import Link from 'next/link.js'
+import Popup from '@/components/Popup.jsx'
 
 function Hero() {
   return(
@@ -36,13 +37,15 @@ function Partners() {
 }
 
 export default function Home() {
+
   return (
     <div className='flex flex-col items-center bg-primary overflow-hidden'>
-       <Hero />
-       <NewsList />
-       <Calendar />
-       <Numbers />
-       {/* <Partners /> */}
+      <Popup />
+      <Hero />
+      <NewsList />
+      <Calendar />
+      <Numbers />
+      {/* <Partners /> */}
     </div>
   )
 }
