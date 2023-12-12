@@ -73,7 +73,7 @@ export default function Events() {
 
 		const querySnapshot = await getDocs(q)
 		const eventsData = querySnapshot.docs.map((doc) => doc.data())
-		eventsData.sort((a, b) => new Date(a.from) - new Date(b.from))
+		eventsData.sort((a, b) => new Date(b.from) - new Date(a.from))
 
      	setEvents(eventsData);
 

@@ -1,7 +1,7 @@
 "use client"
 
 import { app } from "@/utils/firebase";
-import { collection, doc, getDocs, getFirestore, query, limit } from "firebase/firestore";
+import { collection, doc, getDocs, getFirestore, query, limit, orderBy } from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 function formatDate(dateString) {
@@ -31,13 +31,15 @@ function CalendarCard({title, image, from, to}) {
 
 		const db = getFirestore(app);
 
-		const q = query(collection(db, "Events"), limit(4));
+		const q = query(collection(db, "Events"), orderBy("from", "desc"), limit(4));
 
 		const querySnapshot = await getDocs(q);
 		const eventData = querySnapshot.docs.map((doc) => doc.data());
 
 		eventData.sort((a, b) => new Date(a.from) - new Date(b.from))
      	setEvents(eventData);
+
+		console.log(eventData)
 
 	}
 
